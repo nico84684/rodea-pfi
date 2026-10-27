@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Guion de Rodea</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- @@FUENTES: las mismas tres familias que la presentación -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700;800&family=Roboto:wght@400;500;700;900&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Guion de ensayo: una columna de lectura, barra fija para elegir orador, bloques por slide con reloj acumulado. */
+:root{
+  --bg:#f4f7fc; --surface:#ffffff; --ink:#0b1530; --soft:#2c3a5e; --mute:#5d6a8c; --line:#dde4f2; --chip:#eef2fa;
+  --brand:#1C4630; --ok:#178a5c; --warn:#b76e00; --risk:#c8334f;
+  --sA:#8a6a1f; --sB:#2E6B3E; --sC:#0e9488; --sD:#cf3f86; --sE:#cf6a12; --sF:#5b6b00; --sG:#0b7fae; --sH:#a3402a;
+  --display:"Roboto Slab",Georgia,serif;
+  --body:"Roboto","Segoe UI",system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#060914; --surface:#0d1428; --ink:#eaf0ff; --soft:#c5cfeb; --mute:#8d98b8; --line:#1d2849; --chip:#141d38;
+  --brand:#9fcfa5; --ok:#3ddc97; --warn:#ffb547; --risk:#ff5470;
+  --sA:#C9A961; --sB:#9fcfa5; --sC:#2ee6d6; --sD:#f472b6; --sE:#fb9a4b; --sF:#c3d94a; --sG:#4cc4f5; --sH:#ff8a6b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#060914; --surface:#0d1428; --ink:#eaf0ff; --soft:#c5cfeb; --mute:#8d98b8; --line:#1d2849; --chip:#141d38;
+  --brand:#9fcfa5; --ok:#3ddc97; --warn:#ffb547; --risk:#ff5470;
+  --sA:#C9A961; --sB:#9fcfa5; --sC:#2ee6d6; --sD:#f472b6; --sE:#fb9a4b; --sF:#c3d94a; --sG:#4cc4f5; --sH:#ff8a6b; color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding-block:0 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.035em;text-wrap:balance}
+h1{font-size:clamp(28px,4.6vw,44px);line-height:1.05}
+h2{font-size:clamp(20px,2.6vw,26px);line-height:1.15;margin-bottom:6px}
+h3{font-size:17px;line-height:1.25}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.lead{color:var(--soft);font-size:17px;max-width:62ch}
+section{margin-top:56px}
+.sec-head{display:grid;gap:6px;margin-bottom:20px}
+.sec-head p{color:var(--mute);max-width:62ch}
+header{padding-top:40px;display:grid;gap:16px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{font-family:var(--mono);font-size:12px;padding:5px 11px;border-radius:999px;background:var(--chip);color:var(--soft)}
+.fact b{color:var(--ink);font-weight:600}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;margin-top:28px;padding-block:10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar-l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-right:4px}
+.pick{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 13.5px var(--body);padding:6px 12px 6px 8px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.pick i,.spk i,.card .who i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;color:#fff;background:var(--c,var(--mute));flex:none}
+.pick[aria-pressed="true"]{border-color:var(--c,var(--ink));box-shadow:0 0 0 2px color-mix(in srgb,var(--c,var(--ink)) 30%,transparent)}
+.pick:focus-visible,.copy:focus-visible,input:focus-visible,.seg:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.mine{margin-left:auto;font-size:13px;color:var(--mute)} .mine b{color:var(--ink)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;align-content:start;border-top:4px solid var(--c)}
+.card .who{display:flex;align-items:center;gap:8px}
+.card .who i{width:26px;height:26px;font-size:12px}
+.card input{width:100%;min-width:0;font:600 15px var(--body);color:var(--ink);background:transparent;border:none;border-bottom:1px dashed var(--line);padding:2px 0}
+.card .role{font-size:13px;color:var(--c);font-weight:600}
+.card .topic{font-size:13.5px;color:var(--soft);line-height:1.4}
+.card .tt{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px;font-family:var(--mono);font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:8px}
+.card .tt b{color:var(--ink);font-size:15px}
+.tmap{display:grid;gap:14px}
+.trow{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center}
+.trow .lab{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.track{display:flex;height:34px;border-radius:10px;overflow:hidden;gap:2px;background:var(--line)}
+.seg{background:var(--c);color:#fff;font:600 11px var(--mono);display:grid;place-items:center;min-width:0;overflow:hidden;white-space:nowrap;cursor:pointer;border:none;padding:0}
+.seg.gap{cursor:default;color:var(--mute);background:repeating-linear-gradient(135deg,var(--surface) 0 6px,var(--chip) 6px 12px)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--mute);grid-column:2}
+.act-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:6px}
+.act-head span{font-family:var(--mono);font-size:13px;color:var(--mute)}
+.blk{display:grid;grid-template-columns:86px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);transition:opacity .25s}
+.clock{display:grid;gap:3px;align-content:start;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.clock .at{font-size:18px;font-weight:600}
+.clock .dur,.clock .sn{font-size:12px;color:var(--mute)}
+.body{min-width:0;display:grid;gap:10px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.spk{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--c);padding:3px 10px 3px 4px;border-radius:999px;background:color-mix(in srgb,var(--c) 13%,transparent)}
+.say{font-size:18px;line-height:1.62;max-width:64ch;padding-left:14px;border-left:3px solid var(--c)}
+.cue{font-size:14px;color:var(--mute);font-style:italic;max-width:64ch}
+.cue::before{content:"Acción · ";font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn)}
+.pase{display:flex;gap:10px;align-items:baseline;font-size:15px;color:var(--soft);background:var(--chip);border-radius:12px;padding:10px 14px;max-width:64ch}
+.pase .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--c2);white-space:nowrap}
+body.focus .blk.dim{opacity:.32}
+.you{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);border:1px solid var(--c);border-radius:999px;padding:2px 8px;display:none}
+body.focus .blk:not(.dim) .you{display:inline-block}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:400;text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{font-family:var(--mono);color:var(--mute);font-variant-numeric:tabular-nums}
+.promise{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);background:color-mix(in srgb,var(--brand) 12%,transparent);padding:2px 8px;border-radius:999px;white-space:nowrap}
+.cmd{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+code{font-family:var(--mono);font-size:12.5px;background:var(--chip);color:var(--ink);padding:3px 8px;border-radius:7px;overflow-wrap:anywhere}
+.copy{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--mute);font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:7px;cursor:pointer}
+.copy.ok{color:var(--ok);border-color:var(--ok)}
+.qa,.check{display:grid;gap:10px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.q .qq{font-weight:600} .q .qa-a{color:var(--soft);font-size:15px}
+.aud{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.ci{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.ci input{width:18px;height:18px;margin-top:2px;accent-color:var(--brand)}
+.ci.done .t{color:var(--mute);text-decoration:line-through}
+.note{font-size:12.5px;color:var(--mute);margin-top:10px}
+footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+[hidden]{display:none!important}
+@media(max-width:640px){.blk{grid-template-columns:1fr;gap:10px}.clock{display:flex;gap:12px;align-items:baseline}.say{font-size:17px}.mine{margin-left:0;width:100%}.trow{grid-template-columns:1fr}.ticks{grid-column:1}}
+@media(prefers-reduced-motion:reduce){.blk{transition:none}}
+@media print{.bar{position:static}.copy{display:none}body.focus .blk.dim{opacity:1}}
+</style>
+</head>
+<body>
+<!-- @@DATOS: todo el contenido del guion. Los "t" de cada slide tienen que coincidir con data-t de la presentación
+     (scripts/check_deck.py lo verifica). {A}…{H} en los textos se reemplaza por el nombre del orador. -->
+<script type="application/json" id="guion-data">
+{
+ "title": "Rodea · Guion de la defensa del PFI",
+ "eyebrow": "PFI Ingeniería en Informática · UADE · 2026",
+ "lead": "Defensa de 10 minutos ante el jurado: el discurso son 12 slides en 8:55, con un minuto de margen. Nicole abre con el problema y la solución; en la demo, Nicolás maneja el teléfono y los dos narran; Nicole sigue con el impacto, Nicolás explica dataset, arquitectura y modelo, Nicole presenta el negocio y Nicolás cierra. Después del cierre viene el anexo, que no se expone: es un índice con 15 temas para profundizar solo si el jurado lo pide, con su texto acá debajo. Elegí tu rol en la barra para ver resaltada tu parte.",
+ "deck": "rodea-defensa.html",
+ "slot": 600,
+ "roles": {
+  "A": {
+   "role": "Producto y negocio",
+   "topic": "Problema, brecha, solución, impacto y modelo de negocio"
+  },
+  "B": {
+   "role": "Datos y técnica",
+   "topic": "Generación del dataset, hallazgo de las etiquetas, arquitectura, modelo de ML y cierre"
+  }
+ },
+ "acts": [
+  {
+   "n": 1,
+   "name": "Acto 1 · Problema, Rodea y demo",
+   "target": 265,
+   "slot": 295
+  },
+  {
+   "n": 2,
+   "name": "Acto 2 · Datos, arquitectura y modelo",
+   "target": 190,
+   "slot": 215
+  },
+  {
+   "n": 3,
+   "name": "Acto 3 · Negocio y cierre",
+   "target": 80,
+   "slot": 90
+  },
+  {
+   "n": 4,
+   "name": "Anexo · Para profundizar (solo si lo piden)",
+   "target": 580,
+   "slot": 580
+  }
+ ],
+ "slides": [
+  {
+   "n": 1,
+   "act": 1,
+   "t": 20,
+   "s": "A",
+   "title": "La condición corporal de tu rodeo, en el bolsillo.",
+   "cue": "Pantalla completa con F. Esperar silencio.",
+   "say": "Buenas tardes. Somos Nicole Blanco y Nicolás Fernández, y esto es Rodea: la condición corporal de un rodeo de cría, estimada con el celular del productor, en el potrero y sin señal. Empecemos por qué importa."
+  },
+  {
+   "n": 2,
+   "act": 1,
+   "t": 55,
+   "s": "A",
+   "title": "La vaca flaca que no se ve en agosto es el ternero que no nace",
+   "cue": "Señalar el rango 5–6.",
+   "say": "La condición corporal es la escala de uno a nueve con la que la cría mide las reservas de una vaca, y el ideal está en el medio. Una vaca que llega flaca al servicio no se preña, y ese año no da ternero. La ventana para corregir es agosto y septiembre, porque el animal tarda unos cuarenta y cinco días en cambiar su estado. Subir la condición de dos y medio a tres y medio, en la escala de uno a cinco, se asocia con casi un veintiocho por ciento más de preñez. ¿Y cómo se mide hoy? A ojo. Los cinco productores y asesores que entrevistamos lo confirmaron: no hay instrumento y dos evaluadores no coinciden."
+  },
+  {
+   "n": 3,
+   "act": 1,
+   "t": 30,
+   "s": "A",
+   "title": "La tecnología existe, pero se hizo para el tambo, no para la cría",
+   "say": "En lechería, la estimación automática ya alcanza a un evaluador entrenado. Pero con vacas lecheras, cámaras fijas o 3D y conexión. La cría argentina es otra cosa: Angus, Hereford y Brangus a campo, el celular del productor y lotes sin señal. Y no existe un conjunto de datos público de nuestras razas para entrenar ni para validar."
+  },
+  {
+   "n": 4,
+   "act": 1,
+   "t": 30,
+   "s": "A",
+   "title": "Dos fotos con el celular y, sin señal, la condición corporal con su confianza",
+   "cue": "Nicolás toma el teléfono y activa el espejado.",
+   "say": "Rodea resuelve esa situación. Quien recorre elige la raza y saca dos fotos, lateral y posterior. Un detector encuentra la vaca, y la estimación se hace en el teléfono, sin conexión, con su nivel de confianza y en la escala que use cada uno. Mejor que contarlo es mostrarlo."
+  },
+  {
+   "n": 5,
+   "act": 1,
+   "t": 90,
+   "s": "A+B",
+   "title": "De la foto al puntaje, en modo avión",
+   "say": "Demo paso a paso: ver la tabla de la demo más abajo.",
+   "demo": true
+  },
+  {
+   "n": 6,
+   "act": 1,
+   "t": 40,
+   "s": "A",
+   "title": "Si evita diez vacas vacías en el año, se paga sola.",
+   "say": "¿Qué cambia? Primero, el momento: detectar la vaca flaca en agosto y no en noviembre, cuando ya no hay margen. Segundo, la objetividad: el dato lo levanta quien recorre, pero no depende de su ojo, y el asesor lo lee a distancia. Tercero, el conocimiento: datos de razas argentinas que hoy no existen. El veterinario que entrevistamos lo resumió así: si evita diez vacas vacías en el año, se paga sola.",
+   "pase": [
+    "B",
+    "Para eso hace falta el dato. {B}."
+   ]
+  },
+  {
+   "n": 7,
+   "act": 2,
+   "t": 50,
+   "s": "B",
+   "title": "El dato no existía: construimos el instrumento",
+   "cue": "Señalar el video.",
+   "say": "Ninguna herramienta de anotación servía, porque la validez del dato se juega en la captura. Por eso construimos dos aplicaciones. Rodea Campo guía tres vistas por animal, sin conexión, y registra la raza, porque una Brangus no tiene la silueta de una Angus. Rodea Panel permite etiquetar a distancia y planificar qué razas faltan. El ciego entre evaluadores lo impone el servidor, y lo verifican más de sesenta pruebas. Y en el campo el animal se mueve: la ventana para encuadrar dura segundos. En cinco jornadas reunimos ciento cuarenta y cuatro fotos de cincuenta y un animales."
+  },
+  {
+   "n": 8,
+   "act": 2,
+   "t": 50,
+   "s": "B",
+   "title": "El mismo animal recibe 2,7 puntos menos en foto que en vivo: la etiqueta es el eslabón …",
+   "cue": "Señalar el histograma.",
+   "say": "Como cada animal tiene al menos dos puntajes independientes, pudimos medir algo que casi nadie mide antes de entrenar: la calidad de la etiqueta. En naranja, los puntajes en vivo; en verde, los puntajes sobre fotos de los mismos animales. Sobre fotos, la nota es en promedio dos coma siete puntos más baja. Con las láminas del IPCVA vimos además que los evaluadores ordenan bien, pero comprimen la escala a la mitad. Entrenar con el promedio de ambos modos fabricaría etiquetas que nadie asignó. Por eso entrenamos solo con puntajes sobre fotos, y la escala se va a anclar con un árbitro veterinario."
+  },
+  {
+   "n": 9,
+   "act": 2,
+   "t": 45,
+   "s": "B",
+   "title": "El modelo corre en el teléfono, porque en el potrero no hay señal",
+   "cue": "Recorrer la fila de arriba · Señalar la fila de abajo.",
+   "say": "La decisión central fue dónde corre el modelo. Un servidor era lo más simple, pero exige señal justo donde no la hay. Por eso todo el flujo corre en el teléfono, como vieron en la demo. Control de calidad; un detector de siete megas, elegido por licencia y medido contra umbrales fijados de antemano; un preprocesamiento idéntico al del entrenamiento, píxel por píxel; y el modelo en TensorFlow Lite. Cuando vuelve la señal, se sincroniza con Firebase. Y el pipeline lleva el modelo de PyTorch al teléfono con la misma salida."
+  },
+  {
+   "n": 10,
+   "act": 2,
+   "t": 45,
+   "s": "B",
+   "title": "Con 51 animales, el modelo todavía no supera a responder el promedio, y lo decimos",
+   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala y validación cruzada por animal. Con cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: es lo que vieron en la pantalla de la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy detectaríamos la señal en el doce por ciento de los casos; con quinientas fotos y doble etiquetado, en el noventa y ocho.",
+   "pase": [
+    "A",
+    "¿Y hay un negocio? {A}."
+   ]
+  },
+  {
+   "n": 11,
+   "act": 3,
+   "t": 50,
+   "s": "A",
+   "title": "Suscripción freemium por establecimiento",
+   "say": "El modelo es una suscripción por establecimiento, con un plan gratuito, porque el productor compra cuando lo ve funcionar sobre sus propios animales. Los planes pagos van de veinticinco a ochenta y cinco dólares por mes, según el rodeo. El mercado alcanzable son setenta y ocho mil productores con más de cien cabezas; apuntamos a mil trescientos treinta al quinto año. En el escenario base, el VAN es de sesenta y un mil dólares, con una TIR de casi cuarenta por ciento. Pero el margen es acotado: con un veinte por ciento menos de precio o de conversión, el VAN es negativo. Por eso, primero, un piloto.",
+   "pase": [
+    "B",
+    "Y para cerrar, {B}."
+   ]
+  },
+  {
+   "n": 12,
+   "act": 3,
+   "t": 30,
+   "s": "B",
+   "title": "El cuello de botella es el dato, no el modelo. Y el instrumento para conseguirlo ya fun…",
+   "say": "Cerramos con lo que aprendimos: en este dominio, el cuello de botella es el dato, no el modelo, y el instrumento para generarlo ya funciona en el campo. Lo que sigue: anclar la escala con un árbitro veterinario, llegar a quinientas imágenes de diversas fuentes, razas y condiciones, y contrastar la hipótesis. Gracias. ¿Preguntas?"
+  },
+  {
+   "n": 13,
+   "act": 4,
+   "t": 15,
+   "s": "A",
+   "title": "¿Sobre qué quieren saber más?",
+   "cue": "Durante las preguntas: tocar el tema que pidan. «↩ Volver», arriba a la derecha, regresa a la slide desde la que se saltó. Responde el rol del tema: usuarios, mercado y legal, Nicole; producto, técnica y objetivos, Nicolás.",
+   "say": ""
+  },
+  {
+   "n": 14,
+   "act": 4,
+   "t": 35,
+   "s": "A",
+   "title": "Antes de diseñar, escuchamos al campo",
+   "say": "Antes de diseñar, fuimos al campo. Hicimos cinco entrevistas en profundidad, de entre treinta y ocho y sesenta y ocho minutos, con perfiles deliberadamente distintos: cría, asesoramiento veterinario y terminación. Sumamos cinco jornadas de observación. Partimos de seis hipótesis y cuidamos no sugerir la respuesta: primero el problema, sin mencionar la solución, y después preguntas de compromiso, como si nos dejaban entrar a su campo."
+  },
+  {
+   "n": 15,
+   "act": 4,
+   "t": 40,
+   "s": "A",
+   "title": "Tres hipótesis confirmadas y dos matices que cambiaron el diseño",
+   "say": "Tres hipótesis se confirmaron sin vueltas: la condición se evalúa a ojo, las discrepancias no tienen cómo resolverse y la falta de señal es determinante. Dos se matizaron, y eso cambió el diseño: el valor no está solo en la cría, también en la terminación, y en los establecimientos grandes se decide por rodeo, no animal por animal. Por eso Rodea tiene lectura por lote. Y todos ofrecieron probarla, aunque con reservas sobre lo digital."
+  },
+  {
+   "n": 16,
+   "act": 4,
+   "t": 40,
+   "s": "A",
+   "title": "Tres personas, tres decisiones distintas",
+   "say": "Sintetizamos la evidencia en tres personas. Ricardo maneja tres campos y necesita anticiparse: si la flaca la ve en agosto, la salva. Marina asesora a varios establecimientos y quiere mostrar la evolución del rodeo con números, no con su palabra. Y Javier, en un feedlot, decide por lote: no necesita saber cómo está cada vaca, sino qué lote carga el lunes. Los nombres y las frases son sintéticos; cada persona declara de qué entrevista sale."
+  },
+  {
+   "n": 17,
+   "act": 4,
+   "t": 40,
+   "s": "A",
+   "title": "Nadie combina el celular que el productor ya tiene con validación en razas argentinas",
+   "say": "Relevamos ocho soluciones y las ubicamos en dos ejes: qué hay que instalar para capturar la imagen, y qué validación publicada tienen sobre razas de carne argentinas. Las de lechería necesitan cámaras fijas. CControl.Ar usa una cámara 3D en la manga. Las que usan el teléfono no publicaron validación por raza. El cuadrante de arriba a la derecha está vacío. Ahí apunta Rodea: es nuestro objetivo declarado, todavía no un resultado medido."
+  },
+  {
+   "n": 18,
+   "act": 4,
+   "t": 35,
+   "s": "A",
+   "title": "La ventaja difícil de copiar no es el código: es el dato",
+   "say": "Lo representamos con un Lean Canvas, porque es un emprendimiento con hipótesis de mercado por validar. El problema y la solución ya los vieron. La propuesta de valor es la condición corporal del rodeo, objetiva, en el momento y sin señal. Y la ventaja difícil de copiar no es el código: es el dataset propio de razas argentinas, con doble etiquetado ciego."
+  },
+  {
+   "n": 19,
+   "act": 4,
+   "t": 35,
+   "s": "A",
+   "title": "El valle del año 2: hay que financiar USD 97.424, no solo la inversión inicial",
+   "say": "El flujo acumulado muestra el valle: el punto más bajo llega al final del segundo año, así que la necesidad real de financiamiento es de noventa y siete mil dólares, no los treinta y seis mil de la inversión inicial. El escenario pesimista, con sequía y un competidor gratuito, no recupera la inversión. Por eso buscamos fuentes no dilutivas: concursos AgTech, aportes no reembolsables e incubadoras."
+  },
+  {
+   "n": 20,
+   "act": 4,
+   "t": 35,
+   "s": "B",
+   "title": "La app que garantiza el protocolo en el potrero",
+   "say": "Así se ve Rodea Campo, la app de captura. La guía indica cómo encuadrar cada vista y recuerda que haya una sola vaca. El detector propone el animal y elige quien sacó la foto. La ficha registra raza, pelaje y sexo, y si falta una vista se puede guardar igual, pero queda declarado. Y en el etiquetado cruzado, cada evaluador puntúa sin ver lo que puso el otro."
+  },
+  {
+   "n": 21,
+   "act": 4,
+   "t": 35,
+   "s": "B",
+   "title": "El dataset, auditable desde la oficina",
+   "say": "Rodea Panel es la web de gestión. El resumen muestra el avance del etiquetado, la distribución de puntajes y el plan de muestreo: qué condiciones faltan salir a buscar. En animales se filtran por raza y estado. Las cuentas nuevas no ven nada hasta que el investigador las aprueba y les asigna un rol. Y la exportación genera un paquete versionado, con las advertencias para entrenar bien."
+  },
+  {
+   "n": 22,
+   "act": 4,
+   "t": 30,
+   "s": "B",
+   "title": "La app del productor: dos fotos y un resultado honesto",
+   "say": "Y Rodea, la app de producto que vieron en la demo. Arranca con las últimas evaluaciones, funciona con o sin señal, pide la raza antes de capturar y, si en la foto no hay ningún animal, lo dice y pide repetir. El resultado muestra el puntaje con su escala de color, el aviso de modelo de prueba y la precisión medida."
+  },
+  {
+   "n": 23,
+   "act": 4,
+   "t": 30,
+   "s": "B",
+   "title": "Los requerimientos que salen del campo",
+   "say": "Del user research salieron los requerimientos que más pesan. Todo el flujo tiene que funcionar sin internet, y eso ya se cumple en uso real. La estimación tiene que tardar menos de dos segundos en un teléfono de gama media: en gama alta tarda medio segundo, falta medir la media. Y la exactitud a más o menos un punto, que validó el propio veterinario, depende del dataset."
+  },
+  {
+   "n": 24,
+   "act": 4,
+   "t": 55,
+   "s": "B",
+   "title": "Cada decisión, con la alternativa que descartamos",
+   "say": "Estas son las decisiones que más nos enseñaron, cada una con la alternativa que descartamos. La inferencia va en el teléfono porque en el potrero no hay señal. No armamos una base local propia: la caché sin conexión de Firestore ya es la cola de sincronización. No usamos transacciones, porque necesitan leer del servidor y fallan sin señal: escribimos por lote, con operaciones idempotentes. El ciego está en las reglas del servidor, no en la pantalla. Medimos con Kappa ponderado, porque la escala es ordinal. Y descartamos YOLOv8 por su licencia AGPL: elegimos EfficientDet-Lite0 y lo medimos antes de integrarlo. La versión de dieciséis bits cumplió; la de ocho, no."
+  },
+  {
+   "n": 25,
+   "act": 4,
+   "t": 40,
+   "s": "B",
+   "title": "Tres corridas, ninguna supera al trivial, y un control que evitó un falso éxito",
+   "say": "Hicimos tres corridas a medida que crecía el conjunto. Ninguna supera al predictor trivial. Y ojo con el noventa y ocho por ciento a más o menos un punto: con etiquetas concentradas entre cuatro y seis, responder siempre cinco logra lo mismo. Lo más importante fue un control: sin dejar afuera una jornada completa, una evaluadora parecía predecible desde las fotos. Con el control, la correlación caía a cero. La red aprendía la jornada, no la condición."
+  },
+  {
+   "n": 26,
+   "act": 4,
+   "t": 35,
+   "s": "B",
+   "title": "Cada jornada de captura fue también una prueba de campo",
+   "say": "Las pruebas automáticas cubren lo que invalidaría el resultado: el cálculo de concordancia, el ciego, el preprocesamiento y la exportación. Pero la fuente de mejoras más rica fue el campo: en una de cada cuatro laterales el ángulo estaba invertido, había fotos movidas que nadie vio a tiempo, y el teléfono recortaba distinto que el entrenamiento. Cada hallazgo fue una versión nueva."
+  },
+  {
+   "n": 27,
+   "act": 4,
+   "t": 40,
+   "s": "A",
+   "title": "Viable, con condiciones que el diseño ya incorpora",
+   "say": "Es legalmente viable con condiciones que el diseño ya incorpora. Cumplimos la ley de datos personales desde el diseño: consentimiento antes del primer uso y supresión de la cuenta en cinco días hábiles. Todos los componentes tienen licencias permisivas; excluimos los AGPL. La autenticación es gestionada, sin contraseñas propias, con cifrado en tránsito y en reposo. Y la app aclara que es apoyo a la decisión, no un diagnóstico veterinario."
+  },
+  {
+   "n": 28,
+   "act": 4,
+   "t": 40,
+   "s": "B",
+   "title": "Lo construido está; lo que falta depende del dato",
+   "say": "Volvamos a los objetivos. El dataset tiene el doble etiquetado y la concordancia medidos, pero está en el veintinueve por ciento del volumen. La cadena de entrenamiento y la integración sin conexión funcionan, pero falta un modelo válido y medir en gama media. La mejora significativa y la usabilidad con usuarios reales están pendientes, y dependen del dato. Lo construido está; lo que falta, sabemos exactamente qué es."
+  }
+ ],
+ "demo": {
+  "slide": 5,
+  "title": "Rodea en el teléfono, en modo avión",
+  "intro": "90 segundos. {B} maneja el teléfono espejado en la notebook (scrcpy por USB, funciona sin internet) y pasa a esa ventana con Alt+Tab; {A} narra lo que ve el productor. Las fotos se toman sobre dos láminas A4 impresas (lateral y posterior) de un animal Aberdeen Angus del conjunto.",
+  "steps": [
+   {
+    "k": "1",
+    "t": 10,
+    "s": "A",
+    "what": "{B} activa el modo avión y muestra el teléfono",
+    "cmd": "Panel rápido → Modo avión",
+    "says": "Lo hacemos en modo avión: así está el teléfono en los lotes del fondo.",
+    "p": "Sin señal"
+   },
+   {
+    "k": "2",
+    "t": 15,
+    "s": "A",
+    "what": "Nuevo registro → elegir Aberdeen Angus",
+    "cmd": "Inicio → Nuevo registro",
+    "says": "Nuevo registro. Primero, la raza: no se lee igual la silueta de una Angus que la de una Brangus.",
+    "p": "Raza como covariable"
+   },
+   {
+    "k": "3",
+    "t": 25,
+    "s": "B",
+    "what": "Vista lateral sobre la lámina impresa; mostrar el recuadro verde del detector",
+    "cmd": "Sacar las 2 vistas → lateral",
+    "says": "La guía indica cómo encuadrar. El detector, que corre en el teléfono, marca la vaca; si hay otra parecida, nos pregunta cuál estamos puntuando.",
+    "p": "Detector en el borde"
+   },
+   {
+    "k": "4",
+    "t": 10,
+    "s": "B",
+    "what": "Vista posterior y Calcular",
+    "cmd": "Posterior → Calcular",
+    "says": "Ahora la posterior, donde se leen la cadera y la base de la cola.",
+    "p": "Protocolo guiado"
+   },
+   {
+    "k": "5",
+    "t": 20,
+    "s": "A",
+    "what": "Mostrar el resultado: puntaje, escala de color, aviso rojo y tarjeta de precisión",
+    "cmd": "Resultado",
+    "says": "El resultado, en la escala de color de la marca. Y arriba, el aviso: este modelo todavía es de prueba, y la app muestra su precisión medida.",
+    "p": "Honestidad"
+   },
+   {
+    "k": "6",
+    "t": 10,
+    "s": "B",
+    "what": "Guardar y abrir Historial; volver a la presentación con Alt+Tab",
+    "cmd": "Guardar registro → Historial",
+    "says": "Queda guardado en el teléfono y se sincroniza solo cuando vuelve la señal.",
+    "p": "Sin conexión"
+   }
+  ],
+  "payloads": [],
+  "notes": [
+   "Plan B si el espejado falla: quedarse en la slide 5. Las tres capturas siguen los mismos pasos; marcar cada paso con ↓ y narrar igual. Frase de pase: «Para no perder tiempo, se lo mostramos con las capturas de la misma versión».",
+   "Plan C: grabar la demo antes, guardarla como img/demo-rodea.mp4 (vertical) y la slide la reproduce sola en lugar de las capturas.",
+   "Tiempo: si a los 90 segundos no llegaron al resultado, saltar al paso 5 y cerrar."
+  ]
+ },
+ "qa": [
+  [
+   "Demo",
+   "B",
+   "¿El puntaje de la demo es real?",
+   "No: es el modelo de prueba, y la app lo dice en pantalla. La demo muestra la cadena completa funcionando sin señal (captura guiada, detector, inferencia en el teléfono, guardado y sincronización); el modelo se reemplaza cambiando dos archivos del paquete cuando el conjunto esté ampliado."
+  ],
+  [
+   "Modelo",
+   "B",
+   "Si el modelo no supera al predictor trivial, ¿qué validaron?",
+   "La cadena completa: dataset versionado, entrenamiento, exportación y ejecución en el teléfono con paridad exacta. Con 51 animales y la escala comprimida, el resultado nulo es el esperable incluso si la señal existe: la simulación da 12 % de poder hoy y 98 % con 500 fotos y doble etiquetado."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Cómo saben que no se engañaron con el resultado?",
+   "Con controles: permutación de etiquetas y exclusión de una jornada completa. Sin ese control, la evaluadora de campo parecía predecible (Spearman +0,72); al excluir una jornada caía a −0,09, porque la sonda aprendía la jornada y no la condición corporal."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Por qué MobileNetV3 y regresión, y no clasificación en 9 clases?",
+   "MobileNetV3 es la red prevista para correr en el teléfono. La CC es ordinal y, con pocos animales por valor, nueve clases no aprenden las vacías; la salida 1 + 8·σ(x) queda acotada a la escala."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿Por qué inferencia en el dispositivo y no en un servidor?",
+   "Porque el potrero no tiene señal: lo confirmaron las entrevistas y las jornadas de captura. El costo es un modelo cuantizado; se mitiga con la re-puntuación en la nube al sincronizar, que está diseñada."
+  ],
+  [
+   "Dataset",
+   "B",
+   "¿Por qué no usaron una herramienta de anotación existente?",
+   "Porque resuelven el etiquetado de imágenes ya tomadas. Nosotros necesitábamos imponer el protocolo de tres vistas en la captura, operar sin conexión y garantizar el ciego en el servidor, no en la interfaz."
+  ],
+  [
+   "Dataset",
+   "B",
+   "¿Cuánto falta para llegar a 500 fotos?",
+   "Unos 167 animales: entre 7 y 13 jornadas de captura al ritmo medido, y de 3 a 4 horas de etiquetado remoto por evaluador. Priorizamos animales flacos y razas cebuinas, de diversas fuentes y establecimientos."
+  ],
+  [
+   "Dataset",
+   "B",
+   "¿El modelo no confunde raza con condición corporal?",
+   "Es un riesgo declarado: la silueta de una Brangus no es la de una Angus. Por eso la raza es covariable obligatoria, la partición se estratifica por raza cuando se puede y las métricas se reportan por raza."
+  ],
+  [
+   "Negocio",
+   "A",
+   "¿Cómo validaron el precio?",
+   "Con un solo informante, E5, que lo comparó con el software de gestión que ya paga y lo valuó en vacas vacías evitadas. No alcanza para validarlo: por eso proponemos un piloto antes de invertir en adquisición. El precio de equilibrio es USD 32,95, un 18 % por debajo del supuesto."
+  ],
+  [
+   "Negocio",
+   "A",
+   "¿Qué pasa en el escenario pesimista?",
+   "Sequía más un competidor gratuito: VAN de −134.876 USD y no recupera la inversión. Por eso el financiamiento apunta a fuentes no dilutivas (concursos AgTech, aportes no reembolsables, incubadoras) y no a capital de riesgo."
+  ],
+  [
+   "Negocio",
+   "A",
+   "¿Quién es la competencia?",
+   "CControl.Ar usa cámara 3D fija en la manga, para operaciones grandes; GanaderIA estima peso y conteo con dron, no condición corporal. Nuestra ventaja es el dataset propio de razas argentinas con doble etiquetado ciego y el uso con el celular, sin señal."
+  ],
+  [
+   "Legal",
+   "A",
+   "¿Qué pasa con los datos y las licencias?",
+   "Cumplimos la Ley 25.326 desde el diseño (consentimiento, finalidad, minimización de la ubicación). Todos los componentes son Apache 2.0 o BSD; excluimos los AGPL. La app incluye un descargo: es apoyo a la decisión, no diagnóstico veterinario."
+  ],
+  [
+   "User research",
+   "A",
+   "¿Por qué no hicieron una encuesta?",
+   "Estaba prevista para cuantificar los hallazgos, pero no se ejecutó. Su función de contraste se cubrió en parte con la observación en campo, y está declarada como limitación del user research."
+  ],
+  [
+   "User research",
+   "A",
+   "¿Las personas son reales?",
+   "No: los nombres, las fotos y las frases son sintéticos. Cada persona declara de qué entrevista sale: Ricardo de E1, Marina de E5 con evidencia de E2 y E3, y Javier de la dimensión de feedlot de E1."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿Por qué Firebase y no un backend propio desde el principio?",
+   "Por la persistencia sin conexión nativa y porque sus reglas del servidor hacen verificable el ciego entre evaluadores. El backend propio (FastAPI, PostgreSQL, Docker) está diseñado para la re-puntuación y la lectura del asesor."
+  ]
+ ],
+ "check": [
+  [
+   "demo",
+   "B",
+   "<b>Instalar y probar scrcpy</b> con el teléfono por USB en la notebook de la defensa, sin internet. Dejar la ventana abierta antes de empezar."
+  ],
+  [
+   "demo",
+   "A",
+   "<b>Imprimir las dos láminas A4</b> (lateral y posterior) de un animal Aberdeen Angus del conjunto y verificar que el detector lo encuentre con la luz de la sala."
+  ],
+  [
+   "demo",
+   "B",
+   "<b>Teléfono listo:</b> batería cargada, no molestar activado, Rodea abierta en Inicio y el historial con al menos un registro."
+  ],
+  [
+   "demo",
+   "B",
+   "<b>Grabar la demo como respaldo</b> (opcional) y guardarla como img/demo-rodea.mp4."
+  ],
+  [
+   "equipo",
+   "A",
+   "<b>Probar en el proyector real</b> o a 1280×720 y 1024×768: pantalla completa con F, recorrer las 12 slides del discurso y confirmar que los dos videos se reproducen."
+  ],
+  [
+   "equipo",
+   "B",
+   "<b>Copiar la carpeta completa</b> (rodea-defensa.html y la carpeta img) al pendrive y a la notebook. Sin la carpeta img no se ven fotos ni videos."
+  ],
+  [
+   "equipo",
+   "B",
+   "<b>Plan sin internet:</b> funciona igual con tipografías de reemplazo. Abrirla una vez con conexión antes de la defensa."
+  ],
+  [
+   "ensayo",
+   "A",
+   "<b>Tres ensayos completos con cronómetro,</b> uno con la demo real. Objetivos por acto: 4:25, 3:10 y 1:20."
+  ],
+  [
+   "ensayo",
+   "B",
+   "<b>Ensayar la entrada y salida de la demo</b> (Alt+Tab ida y vuelta) y los pases de las slides 6, 10 y 11."
+  ],
+  [
+   "contenido",
+   "A",
+   "<b>Tener abierto el informe en PDF</b> para responder preguntas con tablas: sensibilidad, concordancia, corridas."
+  ],
+  [
+   "sala",
+   "A",
+   "<b>Atajos:</b> → o clic avanza, ← vuelve, N guion, T reinicia el cronómetro del acto, H oculta la barra de tiempos, ↓ y ↑ marcan los pasos de la demo."
+  ],
+  [
+   "anexo",
+   "B",
+   "<b>Practicar el anexo:</b> desde el cierre, «Índice del anexo» abre los 15 temas; tocar uno, responder y volver con «↩ Volver». La tecla 4 también abre el índice."
+  ]
+ ],
+ "footer": "Todas las cifras salen del informe E90 (Blanco y Fernández, PFI 2026): user research (cap. 4), conjunto de datos al 24/10/2026 (cap. 9), pruebas y corridas (cap. 11) y evaluación económico-financiera, escenario base (cap. 12). +28 % de preñez: SAPA. Ilustraciones de la escala de CC: University of Minnesota. Fotos y videos del rodeo y el ternero: propios del equipo. Supuesto de la presentación: Nicole presenta producto y negocio, Nicolás datos y técnica."
+}
+</script>
+<!-- "demo" (opcional): {"slide": n, "title": "…", "intro": "…", "steps": [{"k":"1","t":30,"s":"A","what":"…","cmd":"…","says":"…","p":"Promesa"}],
+     "payloads": [["Etiqueta","--ok","texto a copiar"]], "notes": ["Plan B: …"]}. La suma de "t" de los pasos = "t" de esa slide. -->
+
+<div class="wrap">
+<header>
+  <p class="eyebrow" id="eyebrow"></p>
+  <h1 id="title"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="facts" id="facts"></div>
+</header>
+<nav class="bar" aria-label="Elegir orador"><div class="bar-in" id="picker"><span class="bar-l">Ver como</span></div></nav>
+<section id="reparto"><div class="sec-head"><p class="eyebrow">Reparto</p><h2>Quién habla de qué</h2><p>Escribí el nombre de cada orador en su tarjeta: se usa en las frases de pase de todo el guion. Queda guardado solo en este navegador.</p></div><div class="roster" id="roster"></div></section>
+<section id="mapa"><div class="sec-head"><p class="eyebrow">Mapa de tiempos</p><h2>Quién habla en cada minuto</h2><p>Cada bloque es una slide, a escala de su duración. El tramo rayado es el margen hasta el tiempo asignado. Tocá un bloque para ir a esa parte.</p></div><div class="tmap" id="tmap"></div></section>
+<div id="acts"></div>
+<section id="demo" hidden><div class="sec-head"><p class="eyebrow" id="demoEyebrow"></p><h2 id="demoTitle"></h2><p id="demoIntro"></p></div>
+  <div class="tw"><table><thead><tr><th>#</th><th>Qué se hace</th><th>Habla</th><th>Qué se dice</th><th>Seg.</th><th>Promesa</th></tr></thead><tbody id="demoRows"></tbody></table></div>
+  <div class="qa" id="payloads" style="margin-top:14px"></div><div id="demoNotes"></div></section>
+<section id="preguntas"><div class="sec-head"><p class="eyebrow">Preguntas probables</p><h2>Quién responde cada una</h2><p>Contesta el rol asignado, en corto, y devuelve la palabra.</p></div><div class="qa" id="qa"></div></section>
+<section id="checklist"><div class="sec-head"><p class="eyebrow">Antes de presentar</p><h2>Checklist con responsable</h2><p>Las marcas se guardan solo en tu navegador.</p></div><div class="check" id="check"></div></section>
+<footer id="footer"></footer>
+</div>
+
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('guion-data').textContent);
+const $=s=>document.querySelector(s);
+const KEYS=Object.keys(D.roles||{});
+const NS='guion:'+(D.title||'').slice(0,40)+':';
+const store={get(k,d){try{const v=localStorage.getItem(NS+k);return v===null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem(NS+k,JSON.stringify(v))}catch(_){}}};
+let names=store.get('names',{});
+const nm=k=>(names[k]&&names[k].trim())||('Orador '+k);
+const fmt=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cv=k=>'var(--s'+k+',var(--brand))';
+const fill=s=>esc(s).replace(/\{([A-H])\}/g,(_,k)=>'<b style="color:'+cv(k)+'">'+esc(nm(k))+'</b>');
+const demo=D.demo&&D.demo.steps&&D.demo.steps.length?D.demo:null;
+const demoSpk=demo?[...new Set(demo.steps.map(d=>d.s))]:[];
+const spkOf=x=>demo&&x.n===demo.slide?demoSpk:x.s.split('+');
+
+document.title=D.title||document.title;$('#title').textContent=D.title||'';$('#eyebrow').textContent=D.eyebrow||'';$('#lead').textContent=D.lead||'';$('#footer').textContent=D.footer||'';
+function talk(){const t={},sl={};KEYS.forEach(k=>{t[k]=0;sl[k]=[]});
+  D.slides.forEach(x=>{if(demo&&x.n===demo.slide){demo.steps.forEach(d=>t[d.s]=(t[d.s]||0)+d.t)}else{const ks=x.s.split('+');ks.forEach(k=>t[k]=(t[k]||0)+x.t/ks.length)}spkOf(x).forEach(k=>{(sl[k]=sl[k]||[]).push(x.n)})});return{t,sl}}
+function changes(){let n=0,last=null;D.slides.forEach(x=>{const seq=demo&&x.n===demo.slide?demo.steps.map(d=>d.s):[x.s];seq.forEach(s=>{if(last&&s!==last)n++;last=s})});return n}
+function facts(){const tot=D.slides.reduce((a,x)=>a+x.t,0),f=[];(D.acts||[]).forEach(a=>{const u=D.slides.filter(x=>x.act===a.n).reduce((s,x)=>s+x.t,0);f.push('<b>'+esc(a.name)+'</b> · '+fmt(u)+(a.slot?' de '+fmt(a.slot):''))});
+  f.push('<b>'+D.slides.length+'</b> slides · <b>'+fmt(tot)+'</b> en total','<b>'+changes()+'</b> cambios de orador');if(D.deck)f.push('Presentación: <b>'+esc(D.deck)+'</b>');$('#facts').innerHTML=f.map(x=>'<span class="fact">'+x+'</span>').join('')}
+function picker(){const p=$('#picker');const mk=(k,label,color)=>{const b=document.createElement('button');b.type='button';b.className='pick';b.dataset.k=k;if(color)b.style.setProperty('--c',color);b.innerHTML=(k==='all'?'':'<i>'+k+'</i>')+esc(label);b.onclick=()=>setFocus(k);p.appendChild(b)};
+  mk('all','Todos');KEYS.forEach(k=>mk(k,D.roles[k].role,cv(k)));const m=document.createElement('span');m.className='mine';m.id='mine';p.appendChild(m)}
+function roster(){const {t,sl}=talk(),r=$('#roster');r.innerHTML='';KEYS.forEach(k=>{const c=document.createElement('div');c.className='card';c.style.setProperty('--c',cv(k));
+  c.innerHTML='<div class="who"><i>'+k+'</i><input id="name-'+k+'" aria-label="Nombre del orador '+k+'" placeholder="Orador '+k+'" value="'+esc(names[k]||'')+'"></div><div class="role">'+esc(D.roles[k].role)+'</div><div class="topic">'+esc(D.roles[k].topic||'')+'</div><div class="tt"><span>Slides '+(sl[k]||[]).join(', ')+'</span><b>'+fmt(t[k]||0)+'</b></div>';
+  r.appendChild(c);c.querySelector('input').addEventListener('input',e=>{names[k]=e.target.value;store.set('names',names);script();demoRender();qa();check();mine()})})}
+function map(){const m=$('#tmap');m.innerHTML='';(D.acts||[]).forEach(a=>{const xs=D.slides.filter(x=>x.act===a.n),used=xs.reduce((s,x)=>s+x.t,0),slot=Math.max(a.slot||used,used);
+  const row=document.createElement('div');row.className='trow';row.innerHTML='<span class="lab">'+esc(a.name.split('·')[0].trim())+'</span>';const tr=document.createElement('div');tr.className='track';
+  xs.forEach(x=>{const parts=demo&&x.n===demo.slide?demo.steps.map(d=>[d.s,d.t]):[[x.s.split('+')[0],x.t]];parts.forEach(([k,tt],i)=>{const b=document.createElement('button');b.type='button';b.className='seg';b.style.flex=tt+' 1 0';b.style.setProperty('--c',cv(k));
+    b.title='Slide '+x.n+' · '+x.title+' · '+((D.roles[k]||{}).role||k)+' · '+fmt(tt);b.setAttribute('aria-label',b.title);b.textContent=i>0?'':String(x.n);b.onclick=()=>document.getElementById('sl'+x.n).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});tr.appendChild(b)})});
+  if(slot>used){const g=document.createElement('span');g.className='seg gap';g.style.flex=(slot-used)+' 1 0';g.textContent='margen '+fmt(slot-used);tr.appendChild(g)}
+  row.appendChild(tr);const tk=document.createElement('div');tk.className='ticks';tk.innerHTML=[0,.25,.5,.75,1].map(f=>'<span>'+fmt(slot*f)+'</span>').join('');row.appendChild(tk);m.appendChild(row)})}
+function script(){const host=$('#acts');host.innerHTML='';(D.acts||[{n:1,name:'Guion'}]).forEach(a=>{const sec=document.createElement('section');const xs=D.slides.filter(x=>x.act===a.n),used=xs.reduce((s,x)=>s+x.t,0);
+  sec.innerHTML='<div class="act-head"><h2>'+esc(a.name)+' · '+fmt(used)+'</h2><span>'+[...new Set(xs.map(x=>((D.roles[x.s.split('+')[0]]||{}).role||x.s)))].map(esc).join(' · ')+'</span></div>';let at=0;
+  xs.forEach(x=>{const d=document.createElement('article');d.className='blk';d.id='sl'+x.n;const ks=spkOf(x);d.dataset.s=ks.join(' ');const k0=x.s.split('+')[0];d.style.setProperty('--c',cv(k0));
+    let h='<div class="clock"><span class="at">'+fmt(at)+'</span><span class="dur">'+fmt(x.t)+'</span><span class="sn">SLIDE '+x.n+'</span></div><div class="body"><div class="top"><h3>'+esc(x.title)+'</h3>';
+    ks.forEach(k=>{h+='<span class="spk" style="--c:'+cv(k)+'"><i>'+k+'</i>'+esc(nm(k))+' · '+esc((D.roles[k]||{}).role||'')+'</span>'});h+='<span class="you">Tu parte</span></div>';
+    if(x.say)h+='<p class="say">'+fill(x.say)+'</p>';if(x.cue)h+='<p class="cue">'+fill(x.cue)+'</p>';if(demo&&x.n===demo.slide)h+='<p class="cue">Paso a paso en la sección <a href="#demo" style="color:inherit">Demo</a>.</p>';
+    if(x.pase)h+='<p class="pase" style="--c2:'+cv(x.pase[0])+'"><span class="k">Pase → '+esc(x.pase[0])+'</span><span>'+fill(x.pase[1])+'</span></p>';d.innerHTML=h+'</div>';sec.appendChild(d);at+=x.t});host.appendChild(sec)});applyFocus()}
+function copyBtn(text){const b=document.createElement('button');b.type='button';b.className='copy';b.textContent='Copiar';
+  b.onclick=()=>{const done=()=>{b.textContent='Copiado';b.classList.add('ok');setTimeout(()=>{b.textContent='Copiar';b.classList.remove('ok')},1400)},fb=()=>{const c=b.previousElementSibling;if(c){const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r)}b.textContent='Seleccionado'};
+    try{navigator.clipboard.writeText(text).then(done,fb)}catch(_){fb()}};return b}
+function demoRender(){if(!demo)return;$('#demo').hidden=false;const sl=D.slides.find(x=>x.n===demo.slide)||{t:0};$('#demoEyebrow').textContent='Slide '+demo.slide+' · Demo · '+fmt(demo.steps.reduce((a,d)=>a+d.t,0));$('#demoTitle').textContent=demo.title||'Demo en vivo';$('#demoIntro').innerHTML=fill(demo.intro||'');
+  const tb=$('#demoRows');tb.innerHTML='';demo.steps.forEach((d,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td class="n">'+esc(d.k||i+1)+'</td><td><div style="font-weight:600;margin-bottom:4px">'+esc(d.what)+'</div><div class="cmd"></div></td><td><span class="spk" style="--c:'+cv(d.s)+'"><i>'+d.s+'</i>'+esc(nm(d.s))+'</span></td><td>'+fill(d.says)+'</td><td class="n">'+d.t+'</td><td>'+(d.p?'<span class="promise">'+esc(d.p)+'</span>':'')+'</td>';
+    if(d.cmd){const c=tr.querySelector('.cmd'),code=document.createElement('code');code.textContent=d.cmd;c.appendChild(code);c.appendChild(copyBtn(d.cmd))}tb.appendChild(tr)});
+  const pl=$('#payloads');pl.innerHTML='';(demo.payloads||[]).forEach(([l,c,j])=>{const r=document.createElement('div');r.className='q';r.innerHTML='<div class="top"><b style="color:var('+esc(c)+')">'+esc(l)+'</b></div><div class="cmd"></div>';const code=document.createElement('code');code.textContent=j;r.querySelector('.cmd').append(code,copyBtn(j));pl.appendChild(r)});
+  $('#demoNotes').innerHTML=(demo.notes||[]).map(n=>'<p class="note">'+fill(n)+'</p>').join('')}
+function qa(){const q=$('#qa');q.innerHTML='';(D.qa||[]).forEach(([aud,k,qq,aa])=>{const d=document.createElement('div');d.className='q';d.innerHTML='<div class="top"><span class="aud">'+esc(aud)+'</span><span class="spk" style="--c:'+cv(k)+'"><i>'+k+'</i>'+esc(nm(k))+' · '+esc((D.roles[k]||{}).role||'')+'</span></div><div class="qq">'+esc(qq)+'</div><div class="qa-a">'+esc(aa)+'</div>';q.appendChild(d)})}
+function check(){const c=$('#check');c.innerHTML='';const st=store.get('check',{});(D.check||[]).forEach(([id,k,html])=>{const l=document.createElement('label');l.className='ci'+(st[id]?' done':'');
+  l.innerHTML='<input type="checkbox" id="chk-'+esc(id)+'"'+(st[id]?' checked':'')+'><span class="t">'+html+'</span><span class="spk" style="--c:'+cv(k)+'"><i>'+k+'</i>'+esc((D.roles[k]||{}).role||'')+'</span>';
+  l.querySelector('input').addEventListener('change',e=>{const s=store.get('check',{});s[id]=e.target.checked;store.set('check',s);l.classList.toggle('done',e.target.checked)});c.appendChild(l)})}
+let focusK=store.get('focus','all');if(focusK!=='all'&&!D.roles[focusK])focusK='all';
+function setFocus(k){focusK=k;store.set('focus',k);applyFocus()}
+function applyFocus(){document.body.classList.toggle('focus',focusK!=='all');document.querySelectorAll('.pick').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.k===focusK)));
+  document.querySelectorAll('.blk').forEach(b=>b.classList.toggle('dim',focusK!=='all'&&!b.dataset.s.split(' ').includes(focusK)));mine()}
+function mine(){const m=$('#mine');if(!m)return;if(focusK==='all'){m.textContent='';return}const {t,sl}=talk();m.innerHTML='<b>'+esc(nm(focusK))+'</b> · slides '+(sl[focusK]||[]).join(', ')+' · <b>'+fmt(t[focusK]||0)+'</b> de habla'}
+facts();picker();roster();map();script();demoRender();qa();check();applyFocus();
+})();
+</script>
+</body>
+</html>

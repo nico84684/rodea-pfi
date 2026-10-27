@@ -176,9 +176,10 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
 .prog{display:flex;align-items:baseline;gap:10px;font-family:var(--mono);font-size:13px;color:var(--mute);white-space:nowrap;min-width:0}
 .prog b{font-family:var(--display);font-size:18px;color:var(--ink);font-weight:700}
 .prog span{overflow:hidden;text-overflow:ellipsis;color:var(--soft);max-width:34vw}
-.dots{flex:1}
-.dots button{width:22px;height:6px}
-.dots button.on{width:40px}
+.dots{flex:1;flex-wrap:nowrap;overflow:hidden}
+.dots button{flex:1 1 0;max-width:22px;min-width:5px;width:auto;height:6px}
+.dots button.on{flex-grow:2;max-width:40px}
+.dots button.sep{margin-left:10px}
 .slidebar{position:fixed;left:0;bottom:0;height:4px;width:0;background:var(--c1);z-index:6;transition:width .5s ease}
 /* logos de tecnologías */
 .tk{display:inline-grid;place-items:center;width:1.45em;height:1.45em;border-radius:.32em;background:#F0EBE0;vertical-align:-.32em;margin-right:.38em;flex:none}
@@ -350,7 +351,62 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
 .phones.sm{gap:calc(var(--u)*2)}
 .phones.sm .phone{height:max(260px,calc(var(--u)*52))}
 
+/* versión extendida */
+.st.risk{--sc:var(--risk)} .st.mid{--sc:var(--c1)}
+.stage .tbl.sm{font-size:max(13px,calc(var(--u)*2.6))}
+.stage .tbl.sm td{padding-block:calc(var(--u)*1.1)}
+.stage .tbl td .st{margin-left:0;vertical-align:.1em;font-size:.72em}
+.shots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*2.4);align-items:start}
+.shot{display:grid;gap:calc(var(--u)*1.6);justify-items:center;text-align:center;margin:0}
+.shot .phone{height:max(230px,calc(var(--u)*45))}
+.shot figcaption{font-size:max(13px,calc(var(--u)*2.45));color:var(--soft);line-height:1.3;max-width:15em}
+.shot figcaption b{display:block;color:var(--ink);font-size:1.08em}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*1.6)}
+.pgrid figure{margin:0;position:relative;border-radius:calc(var(--u)*1.4);overflow:hidden;box-shadow:0 0 0 2px rgba(240,235,224,.2),0 16px 36px rgba(0,0,0,.4)}
+.pgrid img{display:block;width:100%;aspect-ratio:1100/684;object-fit:cover;object-position:top left}
+.pgrid figcaption{position:absolute;left:0;bottom:0;padding:.35em .8em;background:rgba(8,23,14,.9);color:var(--ink);font-weight:600;font-size:max(12px,calc(var(--u)*2.3));border-top-right-radius:.6em}
+.persona .p{font-size:max(18px,calc(var(--u)*3.8))!important}
+.persona .q{font-family:var(--display);font-weight:700;font-size:max(15px,calc(var(--u)*2.9));line-height:1.22;color:var(--ink);margin-top:calc(var(--u)*.8)}
+.persona .q::before{content:"«";color:var(--c1)} .persona .q::after{content:"»";color:var(--c1)}
+.persona .src{font-family:var(--mono);font-size:max(10px,calc(var(--u)*1.8));color:var(--mute);margin-top:calc(var(--u)*.6)}
+.canvas{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--u)*1)}
+.canvas>div{background:var(--glass);border-radius:calc(var(--u)*1.6);padding:calc(var(--u)*1.4) calc(var(--u)*1.7);font-size:max(12px,calc(var(--u)*2.4));color:var(--soft);line-height:1.3}
+.canvas h4{font-family:var(--mono);font-size:max(10px,calc(var(--u)*1.85));letter-spacing:.08em;text-transform:uppercase;color:var(--c2);margin-bottom:.5em;font-weight:600}
+.canvas .t2{grid-row:span 2}
+.canvas .uvp{background:color-mix(in srgb,var(--c1) 15%,transparent);box-shadow:inset 0 0 0 2px var(--c1)}
+.canvas .uvp p{font-family:var(--display);font-weight:700;color:var(--ink);font-size:1.18em;line-height:1.2}
+.canvas .c1{grid-column:1/3} .canvas .c2{grid-column:3/6}
+.chart{width:100%;height:auto;display:block;font-family:var(--body)}
+.chart text{fill:var(--soft);font-size:22px}
+.chart .lbl{font-family:var(--display);font-weight:700;font-size:21px}
+.chart polyline{fill:none;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 1.6s ease .5s}
+.slide.active .chart polyline{stroke-dashoffset:0}
+.map{display:block;width:auto;max-width:100%;height:min(48vh,560px);margin:0 auto;font-family:var(--body)}
+.map text{fill:var(--soft);font-size:19px}
+.map .ax{fill:var(--mute);font-size:18px}
+.map .me{font-family:var(--display);font-weight:700;font-size:24px;fill:var(--c1)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*5)}
+
+/* anexo: accesos para profundizar, índice y volver */
+.deep{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--u)*1);margin-top:calc(var(--u)*2.4);font-family:var(--mono);font-size:max(10px,calc(var(--u)*1.9));letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.deep button,.apnav button{font-family:var(--body);font-weight:600;font-size:max(13px,calc(var(--u)*2.4));letter-spacing:0;text-transform:none;padding:.3em .9em;border-radius:99px;background:transparent;border:1.5px solid color-mix(in srgb,var(--c1) 65%,transparent);color:var(--c1);cursor:pointer;transition:background .2s}
+.deep button::after{content:" →"}
+.deep button:hover,.apnav button:hover,.deep button:focus-visible,.apnav button:focus-visible{background:color-mix(in srgb,var(--c1) 18%,transparent);outline:none}
+.apnav{position:fixed;right:max(16px,env(safe-area-inset-right,0px),2vw);top:calc(20px + env(safe-area-inset-top,0px));z-index:7;display:none;gap:10px}
+body.inap .apnav{display:flex}
+.apnav button{background:color-mix(in srgb,var(--bg) 80%,transparent);font-size:14px}
+.apnav .back[hidden]{display:none}
+.idx{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:calc(var(--u)*1.8);align-items:start}
+.idx .grp{display:grid;gap:calc(var(--u)*1)}
+.idx h3{font-family:var(--mono);font-size:max(11px,calc(var(--u)*2));letter-spacing:.12em;text-transform:uppercase;color:var(--gc,var(--c2));padding-bottom:calc(var(--u)*1);border-bottom:3px solid var(--gc,var(--c2));margin-bottom:calc(var(--u)*.4)}
+.idx button{display:grid;gap:.2em;text-align:left;padding:calc(var(--u)*1.3) calc(var(--u)*1.6);border-radius:calc(var(--u)*1.6);border:none;background:var(--glass);box-shadow:inset 0 0 0 1px var(--line);color:var(--soft);font-family:var(--body);font-size:max(12px,calc(var(--u)*2.15));line-height:1.25;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.idx button b{font-family:var(--display);font-size:max(14px,calc(var(--u)*2.9));color:var(--ink);font-weight:700}
+.idx button i{font-style:normal;font-family:var(--mono);font-size:.85em;color:var(--gc,var(--c2))}
+.idx button:hover,.idx button:focus-visible{transform:translateY(-2px);background:color-mix(in srgb,var(--gc,var(--c2)) 14%,transparent);box-shadow:inset 0 0 0 2px var(--gc,var(--c2));outline:none}
+
+@media(prefers-reduced-motion:reduce){.chart polyline{transition:none;stroke-dashoffset:0}}
 @media(max-width:900px){
+  .shots,.pgrid,.two{grid-template-columns:1fr 1fr} .canvas{grid-template-columns:1fr 1fr} .canvas .c1,.canvas .c2{grid-column:auto}
   .media{flex-wrap:wrap} .clip{height:40vh}
   .split,.split.even,.facts3,.kpi4{grid-template-columns:1fr}
   .ccstrip{grid-template-columns:repeat(5,minmax(0,1fr))}
@@ -373,7 +429,8 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
   "acts": [
     {"name": "Acto 1 · Problema, Rodea y demo", "short": "PROBLEMA", "target": 265},
     {"name": "Acto 2 · Datos, arquitectura y modelo", "short": "TÉCNICA", "target": 190},
-    {"name": "Acto 3 · Negocio y cierre", "short": "NEGOCIO", "target": 80}
+    {"name": "Acto 3 · Negocio y cierre", "short": "NEGOCIO", "target": 80},
+    {"name": "Anexo · Para profundizar", "short": "ANEXO", "target": 580}
   ]
 }
 </script>
@@ -448,6 +505,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
       <div class="fact rv"><div class="n">+28 %</div><p>de preñez al subir la CC de 2,5 a 3,5 (escala 1–5)</p></div>
     </div>
     <p class="foot rv">Fuentes: user research propio (5 entrevistas y 5 jornadas de observación, 2026); +28 %: SAPA. Ilustraciones de la escala: University of Minnesota.</p>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-ur">User research</button><button type="button" data-go="ap-hallazgos">Hallazgos</button><button type="button" data-go="ap-personas">Personas</button></div>
   </div>
   
 </section>
@@ -464,6 +522,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
       <div class="l">Datos de otras razas y países</div><div class="r">Datos de razas argentinas, que hoy no existen</div>
     </div>
     <p class="foot rv">Fuente: estado del arte del informe (cap. 2), incluidos CControl.Ar (cámara 3D fija) y EdgeBCS-YOLO (2026).</p>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-arte">Mapa del estado del arte</button></div>
   </div>
   
 </section>
@@ -480,7 +539,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
           <li class="rv"><b>Estima en el teléfono,</b> sin conexión, en escala <span class="nw">1–9</span> o <span class="nw">1–5.</span></li>
           <li class="rv"><b>Lectura por rodeo</b> para el asesor. <span class="st plan">Diseñado</span></li>
         </ul>
-        <div class="chips rv"><span class="chip"><b>rodea</b>v0.4.1</span><span class="chip"><b>rodea campo</b>captura</span><span class="chip"><b>rodea panel</b>web</span></div>
+        <div class="deep rv">Profundizar <button type="button" data-go="ap-rodea">Rodea</button><button type="button" data-go="ap-campo">Rodea Campo</button><button type="button" data-go="ap-panel">Rodea Panel</button></div>
       </div>
       <div class="phones rv">
         <div class="phone"><img src="img/rodea_inicio.jpg" alt="Rodea: pantalla de inicio con las últimas evaluaciones"></div>
@@ -559,7 +618,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
           <div class="stat"><div class="l">Fotos</div><div class="n">144</div></div>
           <div class="stat"><div class="l">Evaluadores</div><div class="n">3</div></div>
         </div>
-        <p class="foot rv">Al 24/10/2026 · 55 % Aberdeen Angus · 134/134 fotos sincronizadas, sin pérdidas.</p>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-campo">Rodea Campo</button><button type="button" data-go="ap-panel">Rodea Panel</button></div>
       </div>
       <div class="media rv">
         <figure class="clip"><video src="img/campo.mp4" poster="img/campo-poster.jpg" muted loop playsinline preload="auto" aria-label="Video de trabajo con la hacienda en el campo"></video><figcaption>En el campo, el animal se mueve: <b>la toma dura segundos</b>.</figcaption></figure>
@@ -620,6 +679,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
         <div class="boxes"><div class="bx"><b>Exportación</b><span>versionada e inmutable</span></div><span class="ar">→</span><div class="bx"><b>Partición</b><span>por animal, sin filtración</span></div><span class="ar">→</span><div class="bx"><b><i class="tk"><svg><use href="#i-pytorch"/></svg></i>PyTorch</b><span>ajuste y evaluación</span></div><span class="ar">→</span><div class="bx key"><b><i class="tk"><svg><use href="#i-onnx"/></svg></i>ONNX → TFLite</b><span>misma salida que PyTorch</span></div></div></div>
     </div>
     <div class="leg rv"><span><i></i>Implementado</span><span><i class="d"></i>Diseñado, pendiente</span><span>Detector: animal encontrado en el 100 % de 95 regiones confirmadas · 564 ms en gama alta</span></div>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-adr">Decisiones de arquitectura</button><button type="button" data-go="ap-req">Requerimientos</button><button type="button" data-go="ap-pruebas">Pruebas</button></div>
   </div>
   
 </section>
@@ -643,6 +703,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
       </div>
     </div>
     <p class="foot rv">Regresión acotada 1 + 8·σ(x), validación cruzada en 5 particiones agrupadas por animal. Poder simulado con 60 réplicas sobre la estructura real de los datos, con r = 0,7 entre imagen y CC.</p>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-corridas">Corridas de entrenamiento</button></div>
   </div>
   
 </section>
@@ -675,6 +736,7 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
     </div>
     <div class="callout rv"><b>Margen acotado:</b> con 20 % menos de precio o de conversión, el VAN es negativo. Primero, un piloto.</div>
     <p class="foot rv">Escenario base a 5 años, USD constantes, tasa CAPM con riesgo país. Productores: MAGyP (2025).</p>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-canvas">Lean Canvas</button><button type="button" data-go="ap-escenarios">Escenarios</button><button type="button" data-go="ap-legal">Legal y seguridad</button></div>
   </div>
   
 </section>
@@ -684,18 +746,356 @@ body.public .spk,body.public .timer,body.public .bar-top{display:none}
     <div class="split">
       <div>
         <p class="kicker rv">Lo que aprendimos</p>
-        <p class="ask rv">El cuello de botella es <span>el dato, no el modelo.</span> Y el instrumento para conseguirlo ya funciona en el campo.</p>
+        <p class="ask rv" style="font-size:max(22px,calc(var(--u)*5))">El cuello de botella es <span>el dato, no el modelo.</span> Y el instrumento para conseguirlo ya funciona en el campo.</p>
         <div class="timeline">
           <div class="tl rv"><em>1</em><div>Anclar la escala con un árbitro veterinario.</div></div>
           <div class="tl rv"><em>2</em><div>Llegar a 500 imágenes de diversas fuentes, razas y condiciones.</div></div>
           <div class="tl rv"><em>3</em><div>Contrastar la hipótesis y lanzar el piloto.</div></div>
         </div>
         <div class="thanks rv"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>Gracias. ¿Preguntas?</div>
+    <div class="deep rv">Profundizar <button type="button" data-go="ap-indice">Índice del anexo</button><button type="button" data-go="ap-objetivos">Objetivos</button></div>
       </div>
       <div class="media rv">
         <figure class="clip"><video src="img/vaca-ternero.mp4" poster="img/vaca-ternero-poster.jpg" data-start="0.4" muted playsinline preload="auto" aria-label="Video de una vaca Aberdeen Angus con su ternero al pie de la sierra"></video><figcaption>Una vaca Angus <b>con su ternero</b>: el resultado que buscamos.</figcaption></figure>
       </div>
     </div>
+  </div>
+  
+</section>
+
+<!-- ===================== ANEXO · Para profundizar ===================== -->
+<section class="slide" id="ap-indice" data-act="4" data-spk="A" data-t="15" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">Anexo · Para profundizar</p>
+    <h2 class="rv">¿Sobre qué quieren <em>saber más?</em></h2>
+    <div class="idx rv">
+      <div class="grp" style="--gc:#C9A961"><h3>Usuarios</h3>
+        <button type="button" data-go="ap-ur"><i>A1</i><b>User research</b>5 entrevistas y 5 jornadas</button>
+        <button type="button" data-go="ap-hallazgos"><i>A2</i><b>Hallazgos</b>6 hipótesis contrastadas</button>
+        <button type="button" data-go="ap-personas"><i>A3</i><b>Personas</b>cría, asesora y feedlot</button></div>
+      <div class="grp" style="--gc:#E9A25F"><h3>Mercado</h3>
+        <button type="button" data-go="ap-arte"><i>A4</i><b>Estado del arte</b>8 soluciones en el mapa</button>
+        <button type="button" data-go="ap-canvas"><i>A5</i><b>Lean Canvas</b>la ventaja es el dato</button>
+        <button type="button" data-go="ap-escenarios"><i>A6</i><b>Escenarios</b>el valle y el financiamiento</button></div>
+      <div class="grp" style="--gc:#9fcfa5"><h3>Producto</h3>
+        <button type="button" data-go="ap-campo"><i>A7</i><b>Rodea Campo</b>captura y etiquetado</button>
+        <button type="button" data-go="ap-panel"><i>A8</i><b>Rodea Panel</b>gestión del dataset</button>
+        <button type="button" data-go="ap-rodea"><i>A9</i><b>Rodea</b>la app del productor</button></div>
+      <div class="grp" style="--gc:#7fb3e6"><h3>Técnica</h3>
+        <button type="button" data-go="ap-req"><i>A10</i><b>Requerimientos</b>y su estado</button>
+        <button type="button" data-go="ap-adr"><i>A11</i><b>Decisiones</b>y lo que descartamos</button>
+        <button type="button" data-go="ap-corridas"><i>A12</i><b>Corridas</b>y el control por jornada</button>
+        <button type="button" data-go="ap-pruebas"><i>A13</i><b>Pruebas</b>y mejoras del campo</button></div>
+      <div class="grp" style="--gc:#c9a3e6"><h3>Cierre</h3>
+        <button type="button" data-go="ap-legal"><i>A14</i><b>Legal y seguridad</b>condiciones de viabilidad</button>
+        <button type="button" data-go="ap-objetivos"><i>A15</i><b>Objetivos</b>qué cumplimos y qué falta</button></div>
+    </div>
+    <p class="foot rv">Tocá un tema para ir a su slide; «↩ Volver» regresa a donde estabas.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-ur" data-act="4" data-spk="A" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A1 · User research</p>
+    <h2 class="rv">Antes de diseñar, <em>escuchamos al campo</em></h2>
+    <div class="row rv">
+      <div class="stat"><div class="l">Entrevistas en profundidad</div><div class="n">5<small>de 38 a 68 min</small></div></div>
+      <div class="stat"><div class="l">Jornadas de observación</div><div class="n">5</div></div>
+      <div class="stat"><div class="l">Perfiles</div><div class="n">3<small>cría · asesor · terminación</small></div></div>
+      <div class="stat"><div class="l">Hipótesis previas</div><div class="n">6</div></div>
+    </div>
+    <ul class="pts" style="margin-top:calc(var(--u)*3.4)">
+      <li class="rv"><b>Primero el problema:</b> la guía no menciona la solución hasta el final.</li>
+      <li class="rv"><b>Compromiso, no agrado:</b> ¿lo probarías?, ¿nos dejás entrar a tu campo?</li>
+      <li class="rv"><b>Anonimizado:</b> informantes E1 a E5; establecimientos solo por provincia.</li>
+    </ul>
+    <p class="foot rv">Junio a octubre de 2026. Estrategia cualitativa, triangulada con la observación en campo (informe, cap. 4).</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-hallazgos" data-act="4" data-spk="A" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A2 · Hallazgos</p>
+    <h2 class="rv">Tres hipótesis confirmadas y <em>dos matices que cambiaron el diseño</em></h2>
+    <div class="tw rv"><table class="tbl sm">
+      <thead><tr><th>Hipótesis</th><th>Resultado</th><th>Qué cambió en el diseño</th></tr></thead>
+      <tbody>
+        <tr><td>La CC se evalúa a ojo, sin instrumento</td><td><span class="st">Confirmada</span></td><td>Rodea asiste al experto, no lo reemplaza</td></tr>
+        <tr><td>Las discrepancias no tienen cómo resolverse</td><td><span class="st">Confirmada</span></td><td>La concordancia entre expertos es el piso de referencia</td></tr>
+        <tr><td>Sin señal en el lugar de evaluación</td><td><span class="st">Confirmada</span></td><td>Todo el flujo corre en el teléfono</td></tr>
+        <tr><td>El productor de cría es quien más lo valora</td><td><span class="st plan">Matizada</span></td><td>La terminación queda como caso de alto valor futuro</td></tr>
+        <tr><td>Se decide animal por animal</td><td><span class="st plan">Matizada</span></td><td>Lectura por rodeo con alerta tipo semáforo</td></tr>
+        <tr><td>Hay disposición a probarlo</td><td><span class="st mid">Con reservas</span></td><td>Demostración sobre los animales del propio campo</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-personas" data-act="4" data-spk="A" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A3 · User personas</p>
+    <h2 class="rv">Tres personas, <em>tres decisiones distintas</em></h2>
+    <div class="cards3">
+      <div class="card persona rv" style="--c:var(--c1)"><div class="lvl">Ganadería multi-establecimiento</div><div class="p">Ricardo, 52</div><div class="who">Tres campos de ciclo completo, un encargado por campo.</div><div class="q">Si la flaca la veo en agosto, la salvo. Si la veo en noviembre, ya perdí el ternero.</div><div class="src">Base: entrevista E1</div></div>
+      <div class="card persona rv" style="--c:var(--c2)"><div class="lvl">Asesora veterinaria de cría</div><div class="p">Marina, 38</div><div class="who">Visita varios establecimientos según el calendario reproductivo.</div><div class="q">Me sirve para mostrarle al productor cómo viene el rodeo con números, no con mi palabra.</div><div class="src">Base: E5, E2 y E3</div></div>
+      <div class="card persona rv" style="--c:var(--c3)"><div class="lvl">Terminación en feedlot</div><div class="p">Javier, 41</div><div class="who">Lotes de cientos de animales con salida continua a faena.</div><div class="q">No necesito saber cómo está cada vaca: necesito saber qué lote cargo el lunes.</div><div class="src">Base: E1, dimensión feedlot</div></div>
+    </div>
+    <p class="foot rv">Nombres y frases sintéticos: representan arquetipos, no informantes identificables.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-arte" data-act="4" data-spk="A" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A4 · Estado del arte</p>
+    <h2 class="rv">Nadie combina el celular que el productor ya tiene <em>con validación en razas argentinas</em></h2>
+    <div class="rv">
+      <svg class="map" viewBox="0 0 1000 500" role="img" aria-label="Mapa de posicionamiento: ocho soluciones relevadas en la mitad inferior; el cuadrante del celular con validación en razas argentinas está vacante y es el objetivo de Rodea">
+        <rect x="525" y="20" width="440" height="215" rx="12" fill="#C9A961" fill-opacity=".1" stroke="#C9A961" stroke-opacity=".6" stroke-dasharray="8 7" stroke-width="2"/>
+        <text x="545" y="222" style="fill:#C9A961;font-size:18px">Cuadrante vacante: ninguna de las ocho lo cubre</text>
+        <line x1="90" y1="450" x2="975" y2="450" stroke="rgba(240,235,224,.5)" stroke-width="2"/>
+        <line x1="90" y1="450" x2="90" y2="15" stroke="rgba(240,235,224,.5)" stroke-width="2"/>
+        <line x1="525" y1="450" x2="525" y2="20" stroke="rgba(240,235,224,.18)" stroke-dasharray="6 6"/>
+        <line x1="90" y1="235" x2="975" y2="235" stroke="rgba(240,235,224,.18)" stroke-dasharray="6 6"/>
+        <text class="ax" x="95" y="482">infraestructura fija o equipo dedicado</text>
+        <text class="ax" x="970" y="482" text-anchor="end">el teléfono que el productor ya tiene →</text>
+        <text class="ax" transform="translate(62 440) rotate(-90)">validación publicada en razas de carne argentinas →</text>
+        <g fill="#ddd7c8">
+          <circle cx="177" cy="282" r="8"/><text x="192" y="289">CControl.Ar · cámara 3D fija</text>
+          <circle cx="847" cy="316" r="8"/><text x="832" y="323" text-anchor="end">Proyecto Agro (UNS) · sin validación por raza</text>
+          <circle cx="455" cy="345" r="8"/><text x="470" y="352">EdgeBCS-YOLO · cámara 2D</text>
+          <rect x="317" y="362" width="16" height="16" fill="none" stroke="#ddd7c8" stroke-width="2.5"/><text x="342" y="377">GanaderIA · dron, peso y conteo</text>
+          <circle cx="247" cy="395" r="8"/><text x="262" y="402">CattleEye · lechería</text>
+          <circle cx="490" cy="416" r="8"/><text x="505" y="423">Reta (UNSL) · lechería</text>
+          <circle cx="151" cy="437" r="8"/><text x="166" y="444">BCS-YOLO · lechería</text>
+        </g>
+        <circle cx="873" cy="110" r="20" fill="none" stroke="#C9A961" stroke-width="4"/><circle cx="873" cy="110" r="8" fill="#C9A961"/>
+        <text class="me" x="840" y="118" text-anchor="end">rodea</text>
+        <text x="840" y="146" text-anchor="end" style="fill:#C9A961;font-size:18px">objetivo declarado, no resultado medido</text>
+      </svg>
+    </div>
+    <p class="foot rv">Esquema sobre las ocho soluciones sistematizadas en el informe (cap. 2): el orden en cada eje es el del informe; las distancias son ilustrativas.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-canvas" data-act="4" data-spk="A" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A5 · Lean Canvas</p>
+    <h2 class="rv">La ventaja difícil de copiar <em>no es el código: es el dato</em></h2>
+    <div class="canvas rv">
+      <div class="t2"><h4>Problema</h4>CC a ojo; evaluadores que no coinciden; la vaca flaca se detecta tarde.</div>
+      <div><h4>Solución</h4>Dos fotos, sin señal, con confianza; lectura por rodeo.</div>
+      <div class="t2 uvp"><h4>Propuesta única de valor</h4><p>La condición corporal de tu rodeo, objetiva y en el momento, desde el celular y sin señal.</p></div>
+      <div><h4>Ventaja injusta</h4>Dataset propio de razas argentinas con doble etiquetado ciego.</div>
+      <div class="t2"><h4>Segmentos</h4>78.720 productores con más de 100 cabezas y sus asesores. Primeros: campos ya digitalizados.</div>
+      <div><h4>Métricas clave</h4>Campos activos, conversión, churn, uso en agosto y septiembre.</div>
+      <div><h4>Canales</h4>Veterinarios asesores, cooperativas, grupos técnicos, Google Play.</div>
+      <div class="c1"><h4>Costos</h4>Equipo, nube, CAC de USD 75, comisión de la tienda del 15 %.</div>
+      <div class="c2"><h4>Ingresos</h4>Suscripción por establecimiento de USD 25, 45 u 85 por mes; plan gratuito de hasta 20 evaluaciones.</div>
+    </div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-escenarios" data-act="4" data-spk="A" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A6 · Escenarios y financiamiento</p>
+    <h2 class="rv">El valle del año 2: hay que financiar <em>USD 97.424</em>, no solo la inversión inicial</h2>
+    <div class="split">
+      <div class="rv">
+        <div class="legend2"><span><i style="background:#ff8577"></i>Pesimista</span><span><i style="background:#C9A961"></i>Base</span><span><i style="background:#8fd19a"></i>Optimista</span></div>
+        <svg class="chart" viewBox="0 0 900 460" role="img" aria-label="Flujo de fondos acumulado por escenario en miles de USD: el base toca su mínimo de −97 en el año 2 y termina en 234; el pesimista no recupera; el optimista termina en 535">
+          <g stroke="rgba(240,235,224,.12)"><line x1="80" y1="404.8" x2="850" y2="404.8"/><line x1="80" y1="202.3" x2="850" y2="202.3"/><line x1="80" y1="101" x2="850" y2="101"/></g>
+          <line x1="80" y1="303.5" x2="850" y2="303.5" stroke="rgba(240,235,224,.45)" stroke-width="2" stroke-dasharray="7 6"/>
+          <g text-anchor="end"><text x="68" y="411">−200</text><text x="68" y="310">0</text><text x="68" y="209">200</text><text x="68" y="108">400</text></g>
+          <g text-anchor="middle"><text x="80" y="450">0</text><text x="230" y="450">1</text><text x="380" y="450">2</text><text x="530" y="450">3</text><text x="680" y="450">4</text><text x="830" y="450">5 años</text></g>
+          <polyline stroke="#ff8577" points="80,321.8 230,346.1 380,375.2 530,401.0 680,409.4 830,386.4"/>
+          <polyline stroke="#8fd19a" points="80,321.8 230,338.5 380,334.5 530,293.9 680,210.7 830,32.5"/>
+          <polyline stroke="#C9A961" stroke-width="7" points="80,321.8 230,341.8 380,352.9 530,336.2 680,286.9 830,185.1"/>
+          <circle cx="380" cy="352.9" r="10" fill="#C9A961"/><line x1="380" y1="342" x2="380" y2="296" stroke="#C9A961" stroke-width="2"/><text class="lbl" x="380" y="286" text-anchor="middle" style="fill:#C9A961">mínimo −97</text>
+        </svg>
+      </div>
+      <div class="kpi">
+        <div class="rv"><div class="n" style="font-size:max(24px,calc(var(--u)*5.6))">−134.876</div><p>VAN pesimista en USD: sequía y un competidor gratuito; no recupera</p></div>
+        <div class="rv"><div class="n" style="font-size:max(24px,calc(var(--u)*5.6))">USD 32,95</div><p>precio de equilibrio: un 18 % debajo del supuesto</p></div>
+      </div>
+    </div>
+    <p class="foot rv">Flujo acumulado en miles de USD. Financiamiento no dilutivo: concursos AgTech, aportes no reembolsables, incubadoras y la Ley 27.506 de Economía del Conocimiento.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-campo" data-act="4" data-spk="B" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A7 · Rodea Campo · captura y etiquetado</p>
+    <h2 class="rv">La app que <em>garantiza el protocolo</em> en el potrero</h2>
+    <div class="shots">
+      <figure class="shot rv"><div class="phone"><img src="img/campo_captura.jpg" alt="Rodea Campo: guía de encuadre de la vista lateral"></div><figcaption><b>Guía por vista</b>una sola vaca, de cabeza a cola</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/campo_elegir.jpg" alt="Rodea Campo: elegir la vaca entre las detectadas"></div><figcaption><b>El detector propone</b>elige quien sacó la foto</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/campo_ficha.jpg" alt="Rodea Campo: ficha del animal con raza, pelaje y sexo"></div><figcaption><b>Ficha del animal</b>raza, pelaje y sexo como covariables</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/campo_cruzado.jpg" alt="Rodea Campo: lista de etiquetado cruzado"></div><figcaption><b>Etiquetado cruzado</b>sin ver el puntaje del otro</figcaption></figure>
+    </div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-panel" data-act="4" data-spk="B" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <div class="split" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr)">
+      <div>
+        <p class="kicker rv">A8 · Rodea Panel · gestión web</p>
+        <h2 class="rv">El dataset, <em>auditable desde la oficina</em></h2>
+        <ul class="pts">
+          <li class="rv"><b>Resumen:</b> avance, distribución y plan de muestreo.</li>
+          <li class="rv"><b>Animales:</b> filtros por raza y estado.</li>
+          <li class="rv"><b>Usuarios:</b> nadie ve datos sin aprobación.</li>
+          <li class="rv"><b>Exportar:</b> paquete versionado para entrenar.</li>
+        </ul>
+      </div>
+      <div class="pgrid rv">
+        <figure><img src="img/panel_resumen.jpg" alt="Rodea Panel: resumen del dataset"><figcaption>Resumen</figcaption></figure>
+        <figure><img src="img/panel_animales.jpg" alt="Rodea Panel: lista de animales"><figcaption>Animales</figcaption></figure>
+        <figure><img src="img/panel_usuarios.jpg" alt="Rodea Panel: aprobación de usuarios"><figcaption>Usuarios</figcaption></figure>
+        <figure><img src="img/panel_exportar.jpg" alt="Rodea Panel: exportación del dataset"><figcaption>Exportar</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-rodea" data-act="4" data-spk="B" data-t="30" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A9 · Rodea · app de producto</p>
+    <h2 class="rv">La app del productor: <em>dos fotos y un resultado honesto</em></h2>
+    <div class="shots">
+      <figure class="shot rv"><div class="phone"><img src="img/rodea_inicio.jpg" alt="Rodea: inicio con las últimas evaluaciones"></div><figcaption><b>Inicio</b>con o sin señal</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/rodea_raza.jpg" alt="Rodea: elegir la raza"></div><figcaption><b>Raza</b>antes de capturar</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/rodea_aviso.jpg" alt="Rodea: aviso cuando no se detecta ningún animal"></div><figcaption><b>Sin animal</b>lo avisa y pide repetir</figcaption></figure>
+      <figure class="shot rv"><div class="phone"><img src="img/rodea_resultado.jpg" alt="Rodea: resultado con escala, aviso y precisión"></div><figcaption><b>Resultado</b>escala, aviso y precisión</figcaption></figure>
+    </div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-req" data-act="4" data-spk="B" data-t="30" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A10 · Requerimientos</p>
+    <h2 class="rv">Los requerimientos que <em>salen del campo</em></h2>
+    <div class="tw rv"><table class="tbl sm">
+      <thead><tr><th>Requerimiento</th><th>Qué exige</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>RNF-02 · Sin conexión</td><td>Captura, calidad, estimación y guardado solo con el teléfono</td><td><span class="st">Cumple</span></td></tr>
+        <tr><td>RNF-03 · Rendimiento</td><td>≤ 2 s por animal (p95) en gama media, Galaxy A15</td><td><span class="st mid">Gama alta: 564 ms</span></td></tr>
+        <tr><td>RNF-04 · Exactitud</td><td>≥ 75 % a ±1 punto en escala 1–9, validado por el usuario (E5)</td><td><span class="st plan">Depende del dataset</span></td></tr>
+        <tr><td>RNF-01 · Usabilidad</td><td>≤ 3 interacciones por captura; botones operables con guantes</td><td><span class="st plan">Prueba SUS pendiente</span></td></tr>
+        <tr><td>RNF-07 · Privacidad</td><td>Consentimiento previo; ubicación a 2 decimales (≈ 1 km)</td><td><span class="st plan">En corrección</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-adr" data-act="4" data-spk="B" data-t="55" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A11 · Decisiones de arquitectura</p>
+    <h2 class="rv">Cada decisión, <em>con la alternativa que descartamos</em></h2>
+    <div class="tw rv"><table class="tbl sm">
+      <thead><tr><th>Elegimos</th><th>Descartamos</th><th>Por qué</th></tr></thead>
+      <tbody>
+        <tr><td>Inferencia en el teléfono</td><td class="no">Inferencia en servidor</td><td>En el potrero no hay señal</td></tr>
+        <tr><td><i class="tk"><svg><use href="#i-firebase"/></svg></i>Caché offline de Firestore</td><td class="no">Base SQLite propia</td><td>Una sola fuente de verdad: la cola es una consulta</td></tr>
+        <tr><td>Escrituras por lote, idempotentes</td><td class="no">Transacciones</td><td>Exigen leer del servidor: fallan sin conexión</td></tr>
+        <tr><td>Ciego en reglas del servidor</td><td class="no">Ocultarlo en la pantalla</td><td>El dato no viaja; se verifica con pruebas</td></tr>
+        <tr><td>Kappa ponderado</td><td class="no">Kappa simple</td><td>Escala ordinal: 4 contra 5 no es 4 contra 8</td></tr>
+        <tr><td><i class="tk"><svg><use href="#i-tensorflow"/></svg></i>EfficientDet-Lite0</td><td class="no">YOLOv8</td><td>Licencia Apache 2.0 y no AGPL; medido antes de integrar</td></tr>
+      </tbody>
+    </table></div>
+    <p class="foot rv">Detector contra 95 regiones confirmadas: 32 bits (13,8 MB) y 16 bits (7,3 MB) encuentran al animal en el 100 % y aciertan la caja en el 95 %; 8 bits (4,6 MB) baja a 88 % y no cumple. Se integró 16 bits.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-corridas" data-act="4" data-spk="B" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A12 · Corridas de entrenamiento</p>
+    <h2 class="rv">Tres corridas, ninguna supera al trivial, <em>y un control que evitó un falso éxito</em></h2>
+    <div class="tw rv"><table class="tbl sm">
+      <thead><tr><th>Corrida</th><th>Datos</th><th class="num">MAE</th><th class="num">±1</th><th class="num">MAE trivial</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>16 animales · CC 5–9 · en vivo, 1 evaluador</td><td class="num">1,24</td><td class="num">56 %</td><td class="num">1,22</td></tr>
+        <tr><td>2</td><td>46 animales · CC 4–7 · fotos, 2 evaluadores</td><td class="num">0,56</td><td class="num">98 %</td><td class="num">0,47</td></tr>
+        <tr><td>3</td><td>51 animales · fotos, 3 evaluadores</td><td class="num">0,53</td><td class="num">98 %</td><td class="num">0,53</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout rv"><b>Control por jornada:</b> sin él, una evaluadora parecía predecible desde las fotos (Spearman +0,72). Al dejar afuera una jornada caía a −0,09: la red aprendía la jornada, no la condición.</div>
+    <p class="foot rv">MobileNetV3-Large; corridas 2 y 3 entrenando solo la cabeza. ±1 alto no implica buen modelo: con etiquetas entre CC 4 y 6, responder siempre 5 logra lo mismo.</p>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-pruebas" data-act="4" data-spk="B" data-t="35" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A13 · Pruebas</p>
+    <h2 class="rv">Cada jornada de captura <em>fue también una prueba de campo</em></h2>
+    <div class="row rv">
+      <div class="stat"><div class="l">Pruebas · instrumento</div><div class="n">184</div></div>
+      <div class="stat"><div class="l">Pruebas · producción</div><div class="n">55</div></div>
+      <div class="stat"><div class="l">Pruebas · pipeline</div><div class="n">119</div></div>
+      <div class="stat"><div class="l">Reglas de acceso</div><div class="n">60+<small>verificaciones</small></div></div>
+    </div>
+    <div class="tw rv" style="margin-top:calc(var(--u)*2.6)"><table class="tbl sm">
+      <thead><tr><th>Hallazgo en el campo</th><th>Mejora</th></tr></thead>
+      <tbody>
+        <tr><td>25 % de las laterales con el ángulo invertido</td><td>Guía con el lado de la cabeza marcado</td></tr>
+        <tr><td>Fotos movidas u oscuras descubiertas tarde</td><td>Control de nitidez y brillo en el teléfono</td></tr>
+        <tr><td>Primera detección de más de 8 s</td><td>Precalentamiento del detector</td></tr>
+        <tr><td>El teléfono recortaba distinto que el entrenamiento</td><td>Preprocesamiento idéntico, píxel por píxel</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-legal" data-act="4" data-spk="A" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A14 · Viabilidad legal y seguridad</p>
+    <h2 class="rv">Viable, con condiciones que <em>el diseño ya incorpora</em></h2>
+    <div class="two">
+      <div class="rv"><p class="h3">Datos y seguridad</p>
+        <ul class="pts">
+          <li><b>Ley 25.326:</b> consentimiento previo, finalidad declarada y supresión en 5 días hábiles.</li>
+          <li><b>Identidad gestionada:</b> sin contraseñas propias; TLS y cifrado en reposo.</li>
+          <li><b>Ubicación a 2 decimales</b> (≈ 1 km). <span class="st plan">En corrección</span></li>
+        </ul></div>
+      <div class="rv"><p class="h3">Propiedad y responsabilidad</p>
+        <ul class="pts">
+          <li><b>Licencias permisivas:</b> Apache 2.0 y BSD; AGPL excluida.</li>
+          <li><b>Ley 11.723 e INPI:</b> registrar software, dataset y marca.</li>
+          <li><b>Descargo:</b> apoyo a la decisión, no diagnóstico veterinario.</li>
+        </ul></div>
+    </div>
+  </div>
+  
+</section>
+
+<section class="slide ap" id="ap-objetivos" data-act="4" data-spk="B" data-t="40" data-scene="">
+  <div class="panel bare stage">
+    <p class="kicker rv">A15 · Cumplimiento de objetivos</p>
+    <h2 class="rv">Lo construido está; <em>lo que falta depende del dato</em></h2>
+    <div class="tw rv"><table class="tbl sm">
+      <thead><tr><th>Objetivo</th><th>Evidencia</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>OE1 · Dataset</td><td>144 imágenes de 51 animales; doble etiquetado y concordancia medidos</td><td><span class="st mid">Parcial · 29 % del volumen</span></td></tr>
+        <tr><td>OE2 · Baseline</td><td>Pipeline y tres corridas; falta el conjunto y la segunda arquitectura</td><td><span class="st mid">Parcial</span></td></tr>
+        <tr><td>OE3 · Mejora significativa</td><td>Protocolo y pruebas estadísticas definidos</td><td><span class="st plan">Pendiente</span></td></tr>
+        <tr><td>OE4 · En el teléfono</td><td>Sin conexión, paridad exacta, detector de 16 bits; falta gama media</td><td><span class="st mid">Parcial</span></td></tr>
+        <tr><td>OE5 · Usabilidad</td><td>Protocolo SUS definido y usuarios comprometidos</td><td><span class="st plan">Pendiente</span></td></tr>
+      </tbody>
+    </table></div>
   </div>
   
 </section>
@@ -952,7 +1352,20 @@ Promise.race([fontsReady,new Promise(r=>setTimeout(r,2500))]).then(boot);
     if(demo&&!demo.closest('.slide').classList.contains('active'))mark(-1);
   }
   document.querySelectorAll('video[data-start]').forEach(v=>v.addEventListener('ended',()=>{v.currentTime=+v.dataset.start;v.play().catch(()=>{})}));
-  const mo=new MutationObserver(sync);slides.forEach(s=>mo.observe(s,{attributes:true,attributeFilter:['class']}));sync();
+  /* anexo: botones data-go saltan a una slide por id; «Volver» regresa a la slide desde la que se saltó */
+  const nav=document.createElement('div');nav.className='apnav';
+  nav.innerHTML='<button type="button" class="back" hidden></button><button type="button" class="toidx">Índice del anexo</button>';document.body.appendChild(nav);
+  const idxOf=id=>slides.indexOf(document.getElementById(id));let origin=-1;
+  const cur=()=>slides.findIndex(s=>s.classList.contains('active'));
+  const isAp=s=>s.classList.contains('ap')||s.id==='ap-indice';
+  function jump(id){const to=idxOf(id),from=cur();if(to<0)return;if(from>=0&&!isAp(slides[from]))origin=from;window.deck.go(to)}
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-go]');if(b){e.preventDefault();e.stopPropagation();b.blur();jump(b.dataset.go)}},true);
+  nav.querySelector('.toidx').addEventListener('click',e=>{e.stopPropagation();e.currentTarget.blur();jump('ap-indice')});
+  nav.querySelector('.back').addEventListener('click',e=>{e.stopPropagation();e.currentTarget.blur();if(origin>=0){const o=origin;origin=-1;window.deck.go(o)}});
+  function syncNav(){const i=cur();const on=i>=0&&isAp(slides[i]);document.body.classList.toggle('inap',on);const b=nav.querySelector('.back');
+    if(on&&origin>=0){b.hidden=false;b.textContent='↩ Volver a la slide '+String(origin+1).padStart(2,'0')}else b.hidden=true;
+    nav.querySelector('.toidx').hidden=slides[i]&&slides[i].id==='ap-indice'}
+  const mo=new MutationObserver(()=>{sync();syncNav()});slides.forEach(s=>mo.observe(s,{attributes:true,attributeFilter:['class']}));sync();syncNav();
   addEventListener('keydown',e=>{
     if(e.key==='h'||e.key==='H')document.body.classList.toggle('nohud');
     if(demo&&demo.closest('.slide').classList.contains('active')){
