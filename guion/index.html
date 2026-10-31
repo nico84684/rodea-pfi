@@ -230,7 +230,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "s": "B",
    "title": "El mismo animal recibe 2,7 puntos menos en foto que en vivo: la etiqueta es el eslabón …",
    "cue": "Señalar el histograma.",
-   "say": "Como cada animal tiene al menos dos puntajes independientes, pudimos medir algo que casi nadie mide antes de entrenar: la calidad de la etiqueta. En naranja, los puntajes en vivo; en verde, sobre fotos de los mismos animales. Sobre fotos, la nota es en promedio dos coma siete puntos más baja. Además, los evaluadores puntuaron diez imágenes oficiales de referencia, de condición conocida. Las ordenan bien, pero comprimen la escala: a una vaca de nueve le ponen entre seis y ocho. Mezclar ambos modos fabricaría etiquetas que nadie asignó. Por eso entrenamos solo con puntajes sobre fotos, y la escala se va a anclar con un árbitro veterinario."
+   "say": "Como cada animal tiene al menos dos puntajes independientes, pudimos medir algo que casi nadie mide antes de entrenar: la calidad de la etiqueta. En naranja, los veintinueve puntajes en vivo; en verde, todos los puntajes sobre fotos. Comparando esos mismos veintinueve animales, sobre fotos la nota es en promedio dos coma siete puntos más baja. Además, los evaluadores puntuaron diez imágenes oficiales de referencia, de condición conocida. Las ordenan bien, pero comprimen la escala: a una vaca de nueve le ponen entre seis y ocho. Mezclar ambos modos fabricaría etiquetas que nadie asignó. Por eso entrenamos solo con puntajes sobre fotos, y la escala se va a anclar con un árbitro veterinario."
   },
   {
    "n": 9,
@@ -247,7 +247,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "t": 45,
    "s": "B",
    "title": "Con 51 animales, el modelo todavía no supera a responder el promedio, y lo decimos",
-   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala, y siempre medimos con animales que el modelo no vio. Con los cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: responde cinco a casi todos. Es lo que vieron en la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy, con dos evaluadores, detectaríamos que las fotos contienen la condición corporal en el cuarenta por ciento de los casos; con quinientas fotos, en el noventa y ocho.",
+   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala, y siempre medimos con animales que el modelo no vio. Con los cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: responde cinco a casi todos. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy, con dos evaluadores, detectaríamos que las fotos contienen la condición corporal en el cuarenta por ciento de los casos; con quinientas fotos, en el noventa y ocho.",
    "pase": [
     "A",
     "¿Y hay un negocio? {A}."
@@ -516,6 +516,12 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
   [
    "Modelo",
    "B",
+   "En la demo la app mostraba 0,55 contra 0,50; ¿por qué la slide dice 0,53?",
+   "Miden cosas distintas. La app mide con una sola foto lateral, que es como la toma el productor; la slide, con todas las fotos de cada animal promediadas. En los dos casos el modelo todavía no supera a responder el promedio, y la app lo dice en pantalla."
+  ],
+  [
+   "Modelo",
+   "B",
    "¿Qué significa detectar la señal?",
    "Que una prueba estadística concluya que las fotos contienen información sobre la condición corporal, con menos de un 5 % de probabilidad de que sea casualidad. No es lo mismo que tener un modelo útil: dice que hay de dónde aprender, no cuánto se va a acertar."
   ],
@@ -566,6 +572,18 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "B",
    "¿Usaron data augmentation?",
    "Sí, solo en entrenamiento: volteo, pequeñas rotaciones y escalas, brillo, contraste y desenfoque, sin tocar el color, porque el pelaje importa. Pero no sustituye al dato: no crea animales flacos ni corrige la escala. La prueba de que no altera la condición corporal está diseñada con el veterinario y pendiente."
+  ],
+  [
+   "Dataset",
+   "B",
+   "¿Qué es anclar la escala con un árbitro veterinario?",
+   "Los evaluadores ordenan bien, pero usan una regla achicada: a una vaca de nueve le ponen entre seis y ocho, y sobre fotos ponen 2,7 puntos menos que en vivo. Un veterinario que puntúe en vivo unos 20 animales, de flacos a gordos, y las 10 imágenes de referencia nos da la conversión a la escala real, como calibrar una balanza con pesas conocidas. E5 es veterinario, pero puntuó sobre fotos: no sirve de ancla."
+  ],
+  [
+   "Dataset",
+   "B",
+   "¿Qué es el Kappa ponderado y cuál usan?",
+   "Mide cuánto coinciden dos evaluadores, descontando lo que coincidirían por azar, y da puntaje parcial según la distancia: un 4 contra un 5 casi coincide; un 4 contra un 8, no. Calculamos la versión lineal y la cuadrática, y reportamos la cuadrática, que casi perdona el desacuerdo de un punto y castiga mucho los grandes. Entre dos evaluadores sobre fotos da 0,57, moderada; el modelo da 0,01, como el azar."
   ],
   [
    "Dataset",
