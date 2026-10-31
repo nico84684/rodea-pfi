@@ -247,7 +247,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "t": 45,
    "s": "B",
    "title": "Con 51 animales, el modelo todavía no supera a responder el promedio, y lo decimos",
-   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala y validación cruzada por animal. Con cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: es lo que vieron en la pantalla de la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy detectaríamos la señal en el doce por ciento de los casos; con quinientas fotos y doble etiquetado, en el noventa y ocho.",
+   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala, y siempre medimos con animales que el modelo no vio. Con los cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: responde cinco a casi todos. Es lo que vieron en la pantalla de la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy, con dos evaluadores por animal, detectaríamos la señal en el cuarenta por ciento de los casos; con quinientas fotos, en el noventa y ocho.",
    "pase": [
     "A",
     "¿Y hay un negocio? {A}."
@@ -481,7 +481,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "Modelo",
    "B",
    "Si el modelo no supera al predictor trivial, ¿qué validaron?",
-   "La cadena completa: dataset versionado, entrenamiento, exportación y ejecución en el teléfono con paridad exacta. Con 51 animales y la escala comprimida, el resultado nulo es el esperable incluso si la señal existe: la simulación da 12 % de poder hoy y 98 % con 500 fotos y doble etiquetado."
+   "La cadena completa: dataset versionado, entrenamiento, exportación y ejecución en el teléfono con paridad exacta. Con 51 animales y la escala comprimida, el resultado nulo es el esperable incluso si la señal existe: la simulación da 40 % de poder hoy, con dos evaluadores por animal, y 98 % con 500 fotos."
   ],
   [
    "Modelo",
@@ -494,6 +494,24 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "B",
    "¿Por qué MobileNetV3 y regresión, y no clasificación en 9 clases?",
    "MobileNetV3 es la red prevista para correr en el teléfono. La CC es ordinal y, con pocos animales por valor, nueve clases no aprenden las vacías; la salida 1 + 8·σ(x) queda acotada a la escala."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Por qué aparecen 51, 46 y 44 animales?",
+   "Es el mismo conjunto en tres recortes: 51 en total, que son 46 de campo y 5 de referencia tomados de videos; el error se mide sobre 44, porque 7 quedan reservados para la prueba final; y la simulación de poder usa la estructura de los 46 de campo."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Y en la reserva de prueba?",
+   "MAE 0,62 contra 0,45 del predictor trivial. Con 7 animales esa diferencia es casi ruido: por eso el número que reportamos es el de la validación cruzada, 0,53 contra 0,53."
+  ],
+  [
+   "Modelo",
+   "B",
+   "El informe dice 12 % de poder hoy; ¿por qué la presentación dice 40 %?",
+   "El 12 % corresponde al conjunto de la corrida 2, con un evaluador por animal. Con E5 ya cargado, los 46 animales de campo tienen dos evaluadores sobre fotos, y en la misma tabla del informe esa fila da 40 %. La conclusión no cambia: con el conjunto actual, el resultado nulo es el esperable."
   ],
   [
    "Arquitectura",
@@ -511,7 +529,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "Dataset",
    "B",
    "¿Cuánto falta para llegar a 500 fotos?",
-   "Unos 167 animales: entre 7 y 13 jornadas de captura al ritmo medido, y de 3 a 4 horas de etiquetado remoto por evaluador. Priorizamos animales flacos y razas cebuinas, de diversas fuentes y establecimientos."
+   "Unos 120 animales más, hasta llegar a 167: entre 7 y 13 jornadas de captura al ritmo medido, y de 3 a 4 horas de etiquetado remoto por evaluador. Priorizamos animales flacos y razas cebuinas, de diversas fuentes y establecimientos."
   ],
   [
    "Dataset",
