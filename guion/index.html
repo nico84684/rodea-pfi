@@ -239,7 +239,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "s": "B",
    "title": "El modelo corre en el teléfono, porque en el potrero no hay señal",
    "cue": "Recorrer la fila de arriba · Señalar la fila de abajo.",
-   "say": "La decisión central fue dónde corre el modelo. Un servidor era lo más simple, pero exige señal justo donde no la hay. Por eso todo el flujo corre en el teléfono, como vieron en la demo. Control de calidad; un detector de siete megas, elegido por licencia y medido contra umbrales fijados de antemano; un preprocesamiento idéntico al del entrenamiento, píxel por píxel; y el modelo en TensorFlow Lite. Cuando vuelve la señal, se sincroniza con Firebase. Y el pipeline lleva el modelo de PyTorch al teléfono con la misma salida."
+   "say": "La decisión central fue dónde corre el modelo. Un servidor exige señal donde no la hay; por eso corre en el teléfono, como vieron en la demo. Primero, controla nitidez y brillo. Después, un detector de siete megas confirma que hay una vaca y cuál es: le exigimos encontrarla en el noventa y cinco por ciento y la encontró en todas las fotos. La foto se prepara igual que al entrenar y el modelo estima. Con señal, se sincroniza con Firebase. Y el pipeline entrena en PyTorch, convierte a TensorFlow Lite y verifica el mismo resultado. El modelo viaja dentro de la app."
   },
   {
    "n": 10,
@@ -247,7 +247,7 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "t": 45,
    "s": "B",
    "title": "Con 51 animales, el modelo todavía no supera a responder el promedio, y lo decimos",
-   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala, y siempre medimos con animales que el modelo no vio. Con los cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: responde cinco a casi todos. Es lo que vieron en la pantalla de la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy, con dos evaluadores por animal, detectaríamos la señal en el cuarenta por ciento de los casos; con quinientas fotos, en el noventa y ocho.",
+   "say": "Entrenamos MobileNetV3, la red prevista para el teléfono, con regresión acotada a la escala, y siempre medimos con animales que el modelo no vio. Con los cincuenta y un animales, el error medio es cero coma cincuenta y tres, igual que responder siempre el promedio: responde cinco a casi todos. Es lo que vieron en la demo. Pero no es un callejón sin salida. Simulamos la prueba sobre nuestros datos: hoy, con dos evaluadores, detectaríamos que las fotos contienen la condición corporal en el cuarenta por ciento de los casos; con quinientas fotos, en el noventa y ocho.",
    "pase": [
     "A",
     "¿Y hay un negocio? {A}."
@@ -514,10 +514,58 @@ footer{margin-top:56px;color:var(--mute);font-size:13px;border-top:1px solid var
    "El 12 % corresponde al conjunto de la corrida 2, con un evaluador por animal. Con E5 ya cargado, los 46 animales de campo tienen dos evaluadores sobre fotos, y en la misma tabla del informe esa fila da 40 %. La conclusión no cambia: con el conjunto actual, el resultado nulo es el esperable."
   ],
   [
+   "Modelo",
+   "B",
+   "¿Qué significa detectar la señal?",
+   "Que una prueba estadística concluya que las fotos contienen información sobre la condición corporal, con menos de un 5 % de probabilidad de que sea casualidad. No es lo mismo que tener un modelo útil: dice que hay de dónde aprender, no cuánto se va a acertar."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Cómo se hizo la simulación y de dónde sale el 40 %?",
+   "Generamos conjuntos de datos que imitan los nuestros: cómo varían las fotos, cómo comprimen la escala los evaluadores y cuánto se equivocan son valores medidos. Lo único supuesto es cuánta condición corporal se ve en la foto: probamos tres escenarios y la slide usa el intermedio. Hoy el poder va de 18 % a 65 % según el escenario; con 500 fotos y dos evaluadores, de 68 % a 100 %."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Y con 500 fotos qué precisión tendrían?",
+   "En el escenario intermedio, y con la escala anclada por el veterinario, el modelo acertaría a ±1 punto en alrededor del 77 % de los animales: apenas por encima del 75 % que exige el requerimiento. Por eso el ancla veterinaria y buscar animales flacos son parte del plan, no un agregado."
+  ],
+  [
    "Arquitectura",
    "B",
    "¿Por qué inferencia en el dispositivo y no en un servidor?",
-   "Porque el potrero no tiene señal: lo confirmaron las entrevistas y las jornadas de captura. El costo es un modelo cuantizado; se mitiga con la re-puntuación en la nube al sincronizar, que está diseñada."
+   "Porque el potrero no tiene señal: lo confirmaron las entrevistas y las jornadas de captura. El costo es un modelo liviano, que tiene que entrar y correr en el teléfono; se mitiga con la re-puntuación en la nube al sincronizar, que está diseñada."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿El modelo usa el recorte del detector?",
+   "Todavía no: hoy evalúa la foto completa. El detector confirma que hay una vaca, pregunta cuál si hay varias y guarda el recuadro con la foto. Cuando un modelo entrenado con el conjunto ampliado use el recorte, la app ya lo tiene elegido por quien vio al animal."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿Qué preprocesamiento se hace?",
+   "Se reduce la foto, se encaja en un cuadrado de 224 píxeles sin deformarla, rellenando los bordes, y se normalizan los colores. El teléfono lo hace igual, píxel por píxel, que el entrenamiento, y una prueba lo verifica con diferencia cero. Antes la app recortaba al centro y cortaba la cabeza y la cola: lo detectamos en el campo y se corrigió."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿Por qué ese detector y con qué umbrales?",
+   "EfficientDet-Lite0, de Google, con licencia Apache 2.0: YOLOv8 obligaba a liberar el código del producto (AGPL). Antes de medir fijamos las metas: encontrar al animal en el 95 % de las fotos y proponer el correcto en el 90 %, sobre 95 regiones marcadas a mano. La versión de 16 bits (7,3 MB) logró 100 % y 95 %; la de 8 bits no cumplió."
+  ],
+  [
+   "Arquitectura",
+   "B",
+   "¿Cómo llega el modelo al teléfono y cómo se actualiza?",
+   "PyTorch lo exporta a ONNX y onnx2tf lo convierte a TensorFlow Lite; el pipeline verifica que dé el mismo resultado que PyTorch, con dos millonésimas de diferencia. Sale un paquete de dos archivos, el modelo y su ficha con el preprocesamiento y las métricas, que viaja dentro de la app. Actualizarlo es reemplazar esos dos archivos y generar una versión nueva; la actualización remota y la re-puntuación en la nube están diseñadas."
+  ],
+  [
+   "Modelo",
+   "B",
+   "¿Usaron data augmentation?",
+   "Sí, solo en entrenamiento: volteo, pequeñas rotaciones y escalas, brillo, contraste y desenfoque, sin tocar el color, porque el pelaje importa. Pero no sustituye al dato: no crea animales flacos ni corrige la escala. La prueba de que no altera la condición corporal está diseñada con el veterinario y pendiente."
   ],
   [
    "Dataset",
